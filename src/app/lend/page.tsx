@@ -38,12 +38,12 @@ export default function LendPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-4">
-              <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
+              <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl text-[var(--foreground)]">
                 Markets
               </h1>
               <SandboxToggle
@@ -53,9 +53,10 @@ export default function LendPage() {
             </div>
             <div className="flex items-center gap-3">
               <FilterModal filters={filters} onFiltersChange={setFilters} />
-              <Button className="rounded-full gap-2">
+              <Button className="rounded-full gap-2 text-sm">
                 <Plus className="w-4 h-4" />
-                Add Open Offer
+                <span className="hidden sm:inline">Add Open Offer</span>
+                <span className="sm:hidden">Add Offer</span>
               </Button>
             </div>
           </div>

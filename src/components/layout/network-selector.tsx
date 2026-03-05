@@ -124,7 +124,7 @@ export function NetworkSelector() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-full max-w-lg bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-2xl p-6"
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-[calc(100%-2rem)] sm:w-full max-w-lg bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-2xl p-4 sm:p-6"
             >
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
@@ -140,7 +140,7 @@ export function NetworkSelector() {
               </div>
 
               {/* Network grid */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {networks.map((network) => (
                   <button
                     key={network.id}
@@ -149,7 +149,7 @@ export function NetworkSelector() {
                       setOpen(false);
                     }}
                     className={cn(
-                      "flex flex-col items-center gap-2.5 p-6 rounded-[var(--radius-card)] border-2 transition-all cursor-pointer hover:bg-[var(--muted)]/30",
+                      "flex flex-col items-center gap-2.5 p-4 sm:p-6 rounded-[var(--radius-card)] border-2 transition-all cursor-pointer hover:bg-[var(--muted)]/30",
                       selected === network.id
                         ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
                         : "border-[var(--border)] hover:border-[var(--foreground-muted)]/30"

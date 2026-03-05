@@ -95,15 +95,15 @@ export function HeroSection() {
           }}
           className="mt-8 flex items-center gap-0"
         >
-          <div className="flex items-center bg-[var(--color-dark-bg-secondary)] border border-[var(--color-dark-border)] rounded-full overflow-hidden max-w-md w-full">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center bg-[var(--color-dark-bg-secondary)] border border-[var(--color-dark-border)] rounded-2xl sm:rounded-full overflow-hidden max-w-md w-full">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="flex-1 bg-transparent px-5 py-3.5 text-sm text-[var(--color-dark-text)] placeholder:text-[var(--color-dark-text-muted)] outline-none font-[family-name:var(--font-body)]"
+              className="flex-1 bg-transparent px-5 py-3.5 text-sm text-[var(--color-dark-text)] placeholder:text-[var(--color-dark-text-muted)] outline-none font-[family-name:var(--font-body)] min-w-0"
             />
-            <button className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-medium bg-[var(--color-primary)] text-black rounded-full m-1 hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer whitespace-nowrap">
+            <button className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-medium bg-[var(--color-primary)] text-black rounded-full m-1 hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer whitespace-nowrap">
               Get Whitelisted
               <ArrowRight className="w-4 h-4" />
             </button>

@@ -59,12 +59,12 @@ export default function SavingsPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* ---------------------------------------------------------------- */}
           {/*  Page title                                                       */}
           {/* ---------------------------------------------------------------- */}
-          <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)] mb-8">
+          <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl text-[var(--foreground)] mb-8">
             Savings
           </h1>
 
@@ -280,7 +280,7 @@ export default function SavingsPage() {
               Supported assets
             </h2>
             <div className="w-full overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[500px]">
                 <thead>
                   <tr className="border-b border-[var(--border)]">
                     <th className="text-left text-[10px] font-medium tracking-widest uppercase text-[var(--foreground-muted)] pb-3 pr-4">

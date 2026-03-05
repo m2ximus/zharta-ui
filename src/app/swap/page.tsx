@@ -64,7 +64,7 @@ function AssetSelector({
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 py-1">
+        <div className="absolute top-full left-0 mt-2 w-48 max-w-[calc(100vw-2rem)] bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 py-1">
           {SWAP_ASSETS.filter((a) => a !== exclude).map((a) => (
             <button
               key={a}
@@ -119,7 +119,7 @@ export default function SwapPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)] mb-8">
             Swap

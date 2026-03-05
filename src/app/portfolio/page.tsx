@@ -23,11 +23,11 @@ export default function PortfolioPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Page header */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
+            <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl text-[var(--foreground)]">
               {mode === "lending" ? "Lending Portfolio" : "Borrowing Portfolio"}
             </h1>
             <PortfolioToggle active={mode} onToggle={setMode} />

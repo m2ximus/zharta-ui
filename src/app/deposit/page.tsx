@@ -45,7 +45,7 @@ export default function DepositPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Header */}
           <div className="mb-8">
@@ -56,7 +56,7 @@ export default function DepositPage() {
 
           {/* Table */}
           <div className="w-full overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[700px]">
               <thead>
                 <tr className="border-b border-[var(--border)]">
                   <th className="text-left text-[10px] font-medium tracking-widest uppercase text-[var(--foreground-muted)] pb-3 pr-4">

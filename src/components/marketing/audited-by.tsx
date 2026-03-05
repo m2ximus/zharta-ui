@@ -116,9 +116,9 @@ export function AuditedBy() {
           <Image
             src="/logos/gov-funding-logo-row.png"
             alt="Government Funding"
-            width={600}
-            height={60}
-            className="h-10 md:h-12 w-auto opacity-50 brightness-0 invert"
+            width={327}
+            height={25}
+            className="w-auto max-w-[280px] md:max-w-[327px] h-auto opacity-50 brightness-0 invert"
           />
         </div>
       </div>

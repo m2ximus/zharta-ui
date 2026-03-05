@@ -60,7 +60,7 @@ export function SettingsDropdown() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -4, scale: 0.95 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-full mt-2 w-64 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 overflow-hidden py-1"
+            className="fixed sm:absolute right-2 sm:right-0 top-14 sm:top-full sm:mt-2 w-[calc(100vw-1rem)] sm:w-64 max-w-[280px] bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 overflow-hidden py-1 max-h-[calc(100vh-4rem)] overflow-y-auto"
           >
             {/* Theme toggle */}
             <button

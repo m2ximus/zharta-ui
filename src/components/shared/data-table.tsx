@@ -76,6 +76,7 @@ export function DataTable<T>({
         </div>
       )}
 
+      <div className="overflow-x-auto -mx-1 px-1">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -155,6 +156,7 @@ export function DataTable<T>({
           )}
         </TableBody>
       </Table>
+      </div>
 
       {/* Pagination */}
       {table.getPageCount() > 1 && (

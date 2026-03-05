@@ -61,11 +61,11 @@ export default function BorrowPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
-            <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
+            <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl text-[var(--foreground)]">
               Borrow
             </h1>
             <SandboxToggle
@@ -78,7 +78,7 @@ export default function BorrowPage() {
             {/* Left column — main form */}
             <div className="lg:col-span-8 space-y-4">
               {/* Deposit + Borrow side-by-side */}
-              <Card className="p-8">
+              <Card className="p-5 sm:p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
                   {/* Deposit */}
                   <div className="pr-0 md:pr-6 md:border-r border-[var(--border)]">
@@ -125,8 +125,8 @@ export default function BorrowPage() {
               </Card>
 
               {/* LTV — interactive color meter */}
-              <Card className="p-8">
-                <div className="flex items-center justify-between mb-4">
+              <Card className="p-5 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                   <div>
                     <h3 className="text-sm font-medium text-[var(--foreground)]">
                       Loan to Value (LTV)
@@ -152,7 +152,7 @@ export default function BorrowPage() {
                     <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">
                       %
                     </span>
-                    <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)] ml-2">
+                    <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)] ml-2 whitespace-nowrap">
                       max. 80.00%
                     </p>
                   </div>
