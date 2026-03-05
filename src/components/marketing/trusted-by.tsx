@@ -1,12 +1,16 @@
+import Image from "next/image";
+
 const partners = [
-  "Securitize",
-  "Keyrock",
-  "Re7 Capital",
-  "3Comma",
-  "Centrifuge",
-  "Maple Finance",
-  "Goldfinch",
-  "Ondo Finance",
+  { name: "Securitize", logo: "/logos/securitize.svg" },
+  { name: "Keyrock", logo: "/logos/keyrock.svg" },
+  { name: "Re7 Capital", logo: "/logos/re7.svg" },
+  { name: "Circle", logo: "/logos/circle-full.svg" },
+  { name: "Chainlink", logo: "/logos/chainlink.svg" },
+  { name: "Alchemy", logo: "/logos/alchemy.svg" },
+  { name: "Avalanche", logo: "/logos/avalanche.svg" },
+  { name: "RedStone", logo: "/logos/redstone.svg" },
+  { name: "Lagoon", logo: "/logos/lagoon.svg" },
+  { name: "Drip", logo: "/logos/drip.svg" },
 ];
 
 export function TrustedBy() {
@@ -27,12 +31,16 @@ export function TrustedBy() {
         <div className="flex animate-marquee">
           {[...partners, ...partners].map((partner, index) => (
             <div
-              key={`${partner}-${index}`}
+              key={`${partner.name}-${index}`}
               className="flex-shrink-0 flex items-center justify-center px-10 md:px-14"
             >
-              <span className="font-semibold text-xl text-[var(--color-dark-text)] opacity-40 hover:opacity-70 transition-opacity duration-300 whitespace-nowrap font-[family-name:var(--font-body)] select-none">
-                {partner}
-              </span>
+              <Image
+                src={partner.logo}
+                alt={partner.name}
+                width={120}
+                height={40}
+                className="h-8 md:h-10 w-auto opacity-50 hover:opacity-80 transition-opacity duration-300 invert"
+              />
             </div>
           ))}
         </div>
