@@ -12,7 +12,8 @@ import { LoanTerms } from "@/components/borrow/loan-terms";
 import { BorrowRateCard } from "@/components/borrow/borrow-rate-card";
 import { BorrowSummary } from "@/components/borrow/borrow-summary";
 import { Card } from "@/components/ui/card";
-import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowRightLeft } from "lucide-react";
 import type { CollateralType, PrincipalType } from "@/types";
 
 const MOCK_PRICES: Record<string, number> = {
@@ -25,8 +26,8 @@ const MOCK_PRICES: Record<string, number> = {
 export default function BorrowPage() {
   const [sandboxEnabled, setSandboxEnabled] = React.useState(false);
   const [collateralAsset, setCollateralAsset] =
-    React.useState<CollateralType>("WBTC");
-  const [collateralAmount, setCollateralAmount] = React.useState("");
+    React.useState<CollateralType>("WETH");
+  const [collateralAmount, setCollateralAmount] = React.useState("10000");
   const [principalAsset, setPrincipalAsset] =
     React.useState<PrincipalType>("USDC");
   const [principalAmount, setPrincipalAmount] = React.useState("");
@@ -54,7 +55,7 @@ export default function BorrowPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--foreground)]">
-              Easy Borrow
+              Borrow
             </h1>
             <SandboxToggle
               enabled={sandboxEnabled}
@@ -62,51 +63,110 @@ export default function BorrowPage() {
             />
           </div>
 
-          {/* Two-panel layout */}
+          {/* Main layout: Form + Rate card */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Left panel - Form inputs */}
-            <div className="lg:col-span-7 space-y-1">
-              {/* Collateral */}
-              <CollateralInput
-                asset={collateralAsset}
-                amount={collateralAmount}
-                onAssetChange={setCollateralAsset}
-                onAmountChange={setCollateralAmount}
-              />
+            {/* Left: Deposit + Borrow side-by-side, LTV below */}
+            <div className="lg:col-span-8 space-y-4">
+              {/* Side-by-side Deposit / Borrow cards (like Spark) */}
+              <Card className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
+                  {/* Deposit card */}
+                  <div className="pr-0 md:pr-4 md:border-r border-[var(--border)]">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                        Deposit
+                      </span>
+                      <span className="text-xs text-[var(--foreground-muted)] cursor-pointer hover:text-[var(--color-primary)] transition-colors">
+                        Add more +
+                      </span>
+                    </div>
+                    <CollateralInput
+                      asset={collateralAsset}
+                      amount={collateralAmount}
+                      onAssetChange={setCollateralAsset}
+                      onAmountChange={setCollateralAmount}
+                      compact
+                    />
+                  </div>
 
-              {/* Arrow separator */}
-              <div className="flex justify-center -my-2 relative z-10">
-                <div className="w-10 h-10 rounded-[3px] bg-[var(--background-tertiary)] border border-[var(--border)] flex items-center justify-center">
-                  <ChevronDown className="w-5 h-5 text-[var(--foreground-muted)]" />
+                  {/* Center connector */}
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex">
+                    <div className="w-10 h-10 rounded-full bg-[var(--background)] border border-[var(--border)] flex items-center justify-center">
+                      <ArrowRightLeft className="w-4 h-4 text-[var(--color-primary)]" />
+                    </div>
+                  </div>
+
+                  {/* Borrow card */}
+                  <div className="pl-0 md:pl-4 pt-4 md:pt-0">
+                    <div className="mb-4">
+                      <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                        Borrow
+                      </span>
+                    </div>
+                    <PrincipalInput
+                      asset={principalAsset}
+                      amount={principalAmount}
+                      onAssetChange={setPrincipalAsset}
+                      onAmountChange={setPrincipalAmount}
+                      compact
+                    />
+                  </div>
                 </div>
-              </div>
+              </Card>
 
-              {/* Principal */}
-              <PrincipalInput
-                asset={principalAsset}
-                amount={principalAmount}
-                onAssetChange={setPrincipalAsset}
-                onAmountChange={setPrincipalAmount}
-              />
+              {/* LTV Section */}
+              <Card className="p-6">
+                <div className="flex items-center justify-between mb-1">
+                  <div>
+                    <h3 className="text-base font-medium text-[var(--foreground)]">
+                      Loan to Value (LTV)
+                    </h3>
+                    <p className="text-sm text-[var(--foreground-muted)]">
+                      Ratio of the collateral to the borrowed value
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-[family-name:var(--font-mono)] text-xl font-semibold text-[var(--foreground)]">
+                      {ltv > 0 ? `${ltv.toFixed(2)}%` : "--"}
+                    </span>
+                    <p className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+                      max. 75.00%
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <LtvMeter
+                    currentLtv={ltv}
+                    maxLtv={75}
+                    liquidationLtv={84}
+                  />
+                </div>
+              </Card>
 
               {/* Loan terms */}
-              <div className="pt-4">
-                <LoanTerms
-                  apr={apr}
-                  maturityDays={maturityDays}
-                  callable={callable}
-                  callWindow={callWindow}
-                  onAprChange={setApr}
-                  onMaturityChange={setMaturityDays}
-                  onCallableChange={setCallable}
-                  onCallWindowChange={setCallWindow}
-                />
-              </div>
+              <LoanTerms
+                apr={apr}
+                maturityDays={maturityDays}
+                callable={callable}
+                callWindow={callWindow}
+                onAprChange={setApr}
+                onMaturityChange={setMaturityDays}
+                onCallableChange={setCallable}
+                onCallWindowChange={setCallWindow}
+              />
+
+              {/* Borrow button - full width, gradient like Spark */}
+              <Button
+                size="lg"
+                className="w-full h-14 rounded-[var(--radius-pill)] text-lg font-semibold bg-gradient-to-r from-[var(--color-primary)] to-[#00B894] text-black hover:opacity-90 transition-opacity"
+                disabled={numericCollateral === 0 || numericPrincipal === 0}
+              >
+                Borrow
+              </Button>
             </div>
 
-            {/* Right panel - Rate card, LTV, Summary */}
-            <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
-              {/* Borrow Rate Card */}
+            {/* Right: Borrow Rate + Summary */}
+            <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -115,24 +175,6 @@ export default function BorrowPage() {
                 <BorrowRateCard rate={apr} asset={principalAsset} />
               </motion.div>
 
-              {/* LTV Section */}
-              <Card className="p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
-                    Loan-to-Value
-                  </h3>
-                  <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">
-                    {ltv > 0 ? `${ltv.toFixed(1)}%` : "--"}
-                  </span>
-                </div>
-                <LtvMeter
-                  currentLtv={ltv}
-                  maxLtv={75}
-                  liquidationLtv={85}
-                />
-              </Card>
-
-              {/* Summary */}
               <BorrowSummary
                 collateralValue={collateralValueUsd}
                 principalAmount={numericPrincipal}

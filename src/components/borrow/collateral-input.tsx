@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { AssetBadge } from "@/components/shared/asset-badge";
-import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectTrigger,
@@ -34,6 +33,7 @@ interface CollateralInputProps {
   amount: string;
   onAssetChange: (asset: CollateralType) => void;
   onAmountChange: (amount: string) => void;
+  compact?: boolean;
 }
 
 export function CollateralInput({
@@ -41,27 +41,17 @@ export function CollateralInput({
   amount,
   onAssetChange,
   onAmountChange,
+  compact = false,
 }: CollateralInputProps) {
   const price = MOCK_PRICES[asset] ?? 0;
   const balance = MOCK_BALANCES[asset] ?? 0;
   const numericAmount = parseFloat(amount) || 0;
   const usdValue = numericAmount * price;
 
-  return (
-    <Card className="p-5">
-      {/* Label */}
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
-          Deposit
-        </span>
-        <div className="flex items-center gap-1.5 text-xs text-[var(--foreground-muted)]">
-          <span>Balance:</span>
-          <span className="font-[family-name:var(--font-mono)]">
-            {balance.toLocaleString(undefined, { maximumFractionDigits: 4 })}
-          </span>
-        </div>
-      </div>
+  const Wrapper = compact ? React.Fragment : WrapCard;
 
+  return (
+    <Wrapper>
       {/* Input row */}
       <div className="flex items-center gap-3">
         {/* Asset selector */}
@@ -69,7 +59,7 @@ export function CollateralInput({
           value={asset}
           onValueChange={(v) => onAssetChange(v as CollateralType)}
         >
-          <SelectTrigger className="w-[160px] h-14 bg-[var(--background-tertiary)] border-[var(--border)] rounded-[3px]">
+          <SelectTrigger className="w-[140px] h-12 bg-[var(--background-tertiary)] border-[var(--border)] rounded-full">
             <SelectValue>
               <div className="flex items-center gap-2">
                 <AssetBadge asset={asset} size="md" />
@@ -87,7 +77,7 @@ export function CollateralInput({
           </SelectContent>
         </Select>
 
-        {/* Amount input */}
+        {/* Amount input + MAX */}
         <div className="flex-1 relative">
           <input
             type="text"
@@ -101,18 +91,14 @@ export function CollateralInput({
             }}
             placeholder="0.00"
             className={cn(
-              "w-full h-14 bg-transparent text-right text-2xl font-[family-name:var(--font-mono)] font-medium",
+              "w-full h-12 bg-transparent text-right text-xl font-[family-name:var(--font-mono)] font-medium",
               "text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/30",
               "outline-none border-none focus:ring-0"
             )}
           />
           <button
             onClick={() =>
-              onAmountChange(
-                balance.toFixed(
-                  asset === "ACRED" ? 0 : 4
-                )
-              )
+              onAmountChange(balance.toFixed(asset === "ACRED" ? 0 : 4))
             }
             className="absolute right-0 top-0 text-[10px] font-semibold uppercase tracking-wider text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] transition-colors cursor-pointer"
           >
@@ -121,12 +107,24 @@ export function CollateralInput({
         </div>
       </div>
 
-      {/* USD value */}
-      <div className="flex justify-end mt-2">
-        <span className="text-sm text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+      {/* USD value + balance */}
+      <div className="flex items-center justify-between mt-1.5">
+        <span className="text-xs text-[var(--foreground-muted)]">
+          {balance.toLocaleString(undefined, { maximumFractionDigits: 4 })}{" "}
+          {asset}
+        </span>
+        <span className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
           {formatCurrency(usdValue, 2)}
         </span>
       </div>
-    </Card>
+    </Wrapper>
+  );
+}
+
+function WrapCard({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="p-5 bg-[var(--card)] border border-[var(--border)] rounded-[3px]">
+      {children}
+    </div>
   );
 }

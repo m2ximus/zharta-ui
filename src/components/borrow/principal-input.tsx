@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { AssetBadge } from "@/components/shared/asset-badge";
-import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectTrigger,
@@ -22,6 +21,7 @@ interface PrincipalInputProps {
   amount: string;
   onAssetChange: (asset: PrincipalType) => void;
   onAmountChange: (amount: string) => void;
+  compact?: boolean;
 }
 
 export function PrincipalInput({
@@ -29,19 +29,13 @@ export function PrincipalInput({
   amount,
   onAssetChange,
   onAmountChange,
+  compact = false,
 }: PrincipalInputProps) {
   const numericAmount = parseFloat(amount) || 0;
   const usdValue = numericAmount * STABLECOIN_PRICE;
 
-  return (
-    <Card className="p-5">
-      {/* Label */}
-      <div className="mb-4">
-        <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
-          Borrow
-        </span>
-      </div>
-
+  const content = (
+    <>
       {/* Input row */}
       <div className="flex items-center gap-3">
         {/* Asset selector */}
@@ -49,7 +43,7 @@ export function PrincipalInput({
           value={asset}
           onValueChange={(v) => onAssetChange(v as PrincipalType)}
         >
-          <SelectTrigger className="w-[160px] h-14 bg-[var(--background-tertiary)] border-[var(--border)] rounded-[3px]">
+          <SelectTrigger className="w-[140px] h-12 bg-[var(--background-tertiary)] border-[var(--border)] rounded-full">
             <SelectValue>
               <div className="flex items-center gap-2">
                 <AssetBadge asset={asset} size="md" />
@@ -81,7 +75,7 @@ export function PrincipalInput({
             }}
             placeholder="0.00"
             className={cn(
-              "w-full h-14 bg-transparent text-right text-2xl font-[family-name:var(--font-mono)] font-medium",
+              "w-full h-12 bg-transparent text-right text-xl font-[family-name:var(--font-mono)] font-medium",
               "text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/30",
               "outline-none border-none focus:ring-0"
             )}
@@ -90,11 +84,19 @@ export function PrincipalInput({
       </div>
 
       {/* USD value */}
-      <div className="flex justify-end mt-2">
-        <span className="text-sm text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+      <div className="flex justify-end mt-1.5">
+        <span className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
           {formatCurrency(usdValue, 2)}
         </span>
       </div>
-    </Card>
+    </>
+  );
+
+  if (compact) return content;
+
+  return (
+    <div className="p-5 bg-[var(--card)] border border-[var(--border)] rounded-[3px]">
+      {content}
+    </div>
   );
 }

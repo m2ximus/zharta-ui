@@ -12,9 +12,9 @@ export function ZhartaLogo({
   size = "md",
 }: ZhartaLogoProps) {
   const dimensions = {
-    sm: { diamond: 24, fontSize: 12, gap: 6 },
-    md: { diamond: 32, fontSize: 14, gap: 8 },
-    lg: { diamond: 40, fontSize: 18, gap: 10 },
+    sm: { icon: 24, fontSize: 12, gap: 6 },
+    md: { icon: 32, fontSize: 14, gap: 8 },
+    lg: { icon: 40, fontSize: 18, gap: 10 },
   };
 
   const d = dimensions[size];
@@ -22,27 +22,17 @@ export function ZhartaLogo({
   return (
     <div className={cn("flex items-center", className)} style={{ gap: d.gap }}>
       <svg
-        width={d.diamond}
-        height={d.diamond}
-        viewBox="0 0 40 40"
+        width={d.icon}
+        height={d.icon}
+        viewBox="0 0 236 236"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Diamond / losange shape */}
         <path
-          d="M20 2L38 20L20 38L2 20L20 2Z"
-          fill="#00D4AA"
-          fillOpacity="0.15"
-          stroke="#00D4AA"
-          strokeWidth="2"
-        />
-        {/* Letter Z inside the diamond */}
-        <path
-          d="M13 14H27L13 26H27"
-          stroke="#00D4AA"
-          strokeWidth="2.5"
-          strokeLinecap="square"
-          strokeLinejoin="miter"
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M112.201 180.417V55L56 111.201V124.216L76.2156 144.431V116.451L91.9857 100.671V160.191L112.201 180.417ZM123.969 55V180.417L180.18 124.216V111.201L159.964 90.9857V118.966L144.184 134.746V75.2256L123.969 55Z"
+          fill="currentColor"
         />
       </svg>
       {showText && (
