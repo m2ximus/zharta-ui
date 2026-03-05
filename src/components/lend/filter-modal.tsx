@@ -1,7 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { SlidersHorizontal, RotateCcw } from "lucide-react";
+import Link from "next/link";
+import { SlidersHorizontal, RotateCcw, Key, ArrowRight } from "lucide-react";
 import { AssetBadge } from "@/components/shared/asset-badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -457,6 +458,26 @@ export function FilterModal({ filters, onFiltersChange }: FilterModalProps) {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* API prompt */}
+          <div className="flex items-center gap-3 rounded-[var(--radius-card)] border border-[var(--color-primary)]/20 bg-[var(--color-primary)]/5 px-4 py-3">
+            <Key className="w-4 h-4 text-[var(--color-primary)] flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <p className="text-sm text-[var(--foreground)]">
+                Automate this filter via the API
+              </p>
+              <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
+                Use custom filters programmatically with your API key
+              </p>
+            </div>
+            <Link
+              href="/settings/api"
+              className="flex items-center gap-1 text-xs font-medium text-[var(--color-primary)] hover:underline whitespace-nowrap flex-shrink-0"
+            >
+              API Settings
+              <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
 
           <DialogFooter className="flex flex-row items-center justify-between sm:justify-between gap-2 pt-2">

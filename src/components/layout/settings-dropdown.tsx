@@ -17,6 +17,7 @@ import {
   ArrowDownToLine,
   ArrowLeftRight,
   Globe,
+  Key,
 } from "lucide-react";
 
 export function SettingsDropdown() {
@@ -194,6 +195,16 @@ export function SettingsDropdown() {
             >
               <BarChart3 className="w-4 h-4 flex-shrink-0" />
               Data Dashboard
+            </Link>
+
+            {/* API Settings */}
+            <Link
+              href="/settings/api"
+              onClick={() => setOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors"
+            >
+              <Key className="w-4 h-4 flex-shrink-0" />
+              API Settings
             </Link>
 
             {/* Divider */}
