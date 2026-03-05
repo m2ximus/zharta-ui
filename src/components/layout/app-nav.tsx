@@ -11,11 +11,8 @@ import { SettingsDropdown } from "./settings-dropdown";
 
 const appTabs = [
   { label: "Portfolio", href: "/portfolio" },
-  { label: "Savings", href: "/savings" },
-  { label: "Deposit", href: "/deposit" },
   { label: "Lend", href: "/lend" },
   { label: "Borrow", href: "/borrow" },
-  { label: "Swap", href: "/swap" },
 ];
 
 export function AppNav() {

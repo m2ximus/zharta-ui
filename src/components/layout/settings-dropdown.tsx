@@ -13,6 +13,9 @@ import {
   FileText,
   Shield,
   ExternalLink,
+  PiggyBank,
+  ArrowDownToLine,
+  ArrowLeftRight,
 } from "lucide-react";
 
 export function SettingsDropdown() {
@@ -132,6 +135,39 @@ export function SettingsDropdown() {
                 />
               </div>
             </button>
+
+            {/* Divider */}
+            <div className="border-t border-[var(--border)] my-1" />
+
+            {/* Savings */}
+            <Link
+              href="/savings"
+              onClick={() => setOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors"
+            >
+              <PiggyBank className="w-4 h-4 flex-shrink-0" />
+              Savings
+            </Link>
+
+            {/* Deposit */}
+            <Link
+              href="/deposit"
+              onClick={() => setOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors"
+            >
+              <ArrowDownToLine className="w-4 h-4 flex-shrink-0" />
+              Deposit
+            </Link>
+
+            {/* Swap */}
+            <Link
+              href="/swap"
+              onClick={() => setOpen(false)}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors"
+            >
+              <ArrowLeftRight className="w-4 h-4 flex-shrink-0" />
+              Swap
+            </Link>
 
             {/* Divider */}
             <div className="border-t border-[var(--border)] my-1" />
