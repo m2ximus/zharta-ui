@@ -12,9 +12,9 @@ export function ZhartaLogo({
   size = "md",
 }: ZhartaLogoProps) {
   const dimensions = {
-    sm: { icon: 32, fontSize: 13, gap: 8 },
-    md: { icon: 40, fontSize: 16, gap: 10 },
-    lg: { icon: 56, fontSize: 20, gap: 12 },
+    sm: { icon: 24, fontSize: 12, gap: 6 },
+    md: { icon: 30, fontSize: 14, gap: 8 },
+    lg: { icon: 48, fontSize: 18, gap: 10 },
   };
 
   const d = dimensions[size];
@@ -37,7 +37,7 @@ export function ZhartaLogo({
       </svg>
       {showText && (
         <span
-          className="font-semibold tracking-[0.15em] text-[var(--foreground)]"
+          className="font-semibold tracking-[0.08em] text-[var(--foreground)]"
           style={{ fontSize: d.fontSize }}
         >
           ZHARTA

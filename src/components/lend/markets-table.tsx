@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { type ColumnDef } from "@tanstack/react-table";
 import { AssetBadge } from "@/components/shared/asset-badge";
 import { DataTable } from "@/components/shared/data-table";
@@ -109,14 +110,16 @@ const columns: ColumnDef<Market, unknown>[] = [
     id: "actions",
     header: "",
     enableSorting: false,
-    cell: () => (
-      <Button
-        variant="outline"
-        size="sm"
-        className="rounded-full text-xs font-medium px-4"
-      >
-        Details
-      </Button>
+    cell: ({ row }) => (
+      <Link href={`/markets/${row.original.id}`}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="rounded-full text-xs font-medium px-4"
+        >
+          Details
+        </Button>
+      </Link>
     ),
   },
 ];

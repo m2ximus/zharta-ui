@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ZhartaLogo } from "./zharta-logo";
 import { WalletButton } from "./wallet-button";
-import { ThemeToggle } from "./theme-toggle";
+import { NotificationsBell } from "./notifications-bell";
+import { SettingsDropdown } from "./settings-dropdown";
 
 const appTabs = [
   { label: "Portfolio", href: "/portfolio" },
@@ -20,42 +21,50 @@ export function AppNav() {
     if (href === "/portfolio") {
       return pathname === "/portfolio" || pathname.startsWith("/portfolio/");
     }
+    if (href === "/lend") {
+      return pathname.startsWith("/lend") || pathname.startsWith("/markets");
+    }
     return pathname.startsWith(href);
   };
 
   return (
     <nav className="sticky top-0 z-50 bg-[var(--background-secondary)] border-b border-[var(--border)]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 items-center justify-between">
-          {/* Logo - small */}
-          <Link href="/" className="flex-shrink-0">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-8">
+        <div className="relative flex h-14 items-center justify-between">
+          {/* Left: plain text tabs with underline */}
+          <div className="flex items-center gap-8">
+            {appTabs.map((tab) => (
+              <Link
+                key={tab.href}
+                href={tab.href}
+                className={cn(
+                  "relative h-14 flex items-center text-sm font-medium transition-colors",
+                  isActive(tab.href)
+                    ? "text-[var(--foreground)]"
+                    : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+                )}
+              >
+                {tab.label}
+                {isActive(tab.href) && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)]" />
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Center: logo */}
+          <Link
+            href="/"
+            className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
+          >
             <ZhartaLogo size="sm" />
           </Link>
 
-          {/* Center: pill tab navigation */}
-          <div className="flex items-center">
-            <div className="flex items-center gap-1 rounded-full bg-[var(--background-tertiary)] p-1">
-              {appTabs.map((tab) => (
-                <Link
-                  key={tab.href}
-                  href={tab.href}
-                  className={cn(
-                    "px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
-                    isActive(tab.href)
-                      ? "bg-[var(--color-primary)] text-black"
-                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-                  )}
-                >
-                  {tab.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: wallet + theme */}
+          {/* Right: notifications + wallet + settings */}
           <div className="flex items-center gap-3">
+            <NotificationsBell />
             <WalletButton className="hidden sm:inline-flex" />
-            <ThemeToggle />
+            <SettingsDropdown />
           </div>
         </div>
       </div>

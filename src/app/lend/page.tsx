@@ -8,6 +8,11 @@ import { Button } from "@/components/ui/button";
 import { LoanRequestsTable } from "@/components/lend/loan-requests-table";
 import { ActiveLoansTable } from "@/components/lend/active-loans-table";
 import { MarketsTable } from "@/components/lend/markets-table";
+import {
+  FilterModal,
+  DEFAULT_FILTERS,
+  type FilterState,
+} from "@/components/lend/filter-modal";
 import { Plus, TrendingUp, Landmark, Banknote } from "lucide-react";
 import { markets } from "@/data/markets";
 import { activeLoans } from "@/data/loans";
@@ -16,6 +21,7 @@ import * as React from "react";
 
 export default function LendPage() {
   const [sandboxEnabled, setSandboxEnabled] = React.useState(false);
+  const [filters, setFilters] = React.useState<FilterState>(DEFAULT_FILTERS);
 
   // Compute aggregate stats
   const totalMarketSize = markets.reduce(
@@ -45,10 +51,13 @@ export default function LendPage() {
                 onToggle={setSandboxEnabled}
               />
             </div>
-            <Button className="rounded-full gap-2">
-              <Plus className="w-4 h-4" />
-              Add Open Offer
-            </Button>
+            <div className="flex items-center gap-3">
+              <FilterModal filters={filters} onFiltersChange={setFilters} />
+              <Button className="rounded-full gap-2">
+                <Plus className="w-4 h-4" />
+                Add Open Offer
+              </Button>
+            </div>
           </div>
 
           {/* Stat cards row — Spark style */}
@@ -116,11 +125,11 @@ export default function LendPage() {
             </TabsContent>
 
             <TabsContent value="loan-requests" className="mt-6">
-              <LoanRequestsTable />
+              <LoanRequestsTable filters={filters} />
             </TabsContent>
 
             <TabsContent value="active-loans" className="mt-6">
-              <ActiveLoansTable />
+              <ActiveLoansTable filters={filters} />
             </TabsContent>
           </Tabs>
         </PageTransition>

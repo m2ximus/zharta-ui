@@ -39,7 +39,7 @@ export function TrustedBy() {
                 alt={partner.name}
                 width={120}
                 height={40}
-                className="h-8 md:h-10 w-auto opacity-50 hover:opacity-80 transition-opacity duration-300 invert"
+                className="h-8 md:h-10 w-auto opacity-50 hover:opacity-80 transition-opacity duration-300 brightness-0 invert"
               />
             </div>
           ))}

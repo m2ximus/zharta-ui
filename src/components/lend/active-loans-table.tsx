@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Link from "next/link";
 import { type ColumnDef } from "@tanstack/react-table";
 import { AssetBadge } from "@/components/shared/asset-badge";
@@ -10,11 +11,89 @@ import { Button } from "@/components/ui/button";
 import { cn, formatAddress, formatDate, formatCurrency } from "@/lib/utils";
 import { activeLoans } from "@/data/loans";
 import type { ActiveLoan } from "@/types";
+import type { FilterState } from "@/components/lend/filter-modal";
 
 function ltvColorClass(ltv: number): string {
   if (ltv < 50) return "text-emerald-400";
   if (ltv <= 70) return "text-amber-400";
   return "text-red-400";
+}
+
+function getMaturityDays(maturityDate: string): number {
+  const diff = new Date(maturityDate).getTime() - Date.now();
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+}
+
+function matchesMaturityRange(days: number, range: string): boolean {
+  switch (range) {
+    case "<30d":
+      return days < 30;
+    case "30-90d":
+      return days >= 30 && days < 90;
+    case "90-180d":
+      return days >= 90 && days < 180;
+    case "180-365d":
+      return days >= 180 && days < 365;
+    case ">365d":
+      return days >= 365;
+    default:
+      return true;
+  }
+}
+
+function applyFilters(
+  data: ActiveLoan[],
+  filters: FilterState
+): ActiveLoan[] {
+  return data.filter((loan) => {
+    // Collateral type
+    if (!filters.collateralTypes.includes(loan.collateralAsset)) return false;
+
+    // Principal type
+    if (!filters.principalTypes.includes(loan.principalAsset)) return false;
+
+    // APR range
+    if (loan.apr < filters.aprRange[0] || loan.apr > filters.aprRange[1])
+      return false;
+
+    // LTV range
+    if (
+      loan.currentLtv < filters.ltvRange[0] ||
+      loan.currentLtv > filters.ltvRange[1]
+    )
+      return false;
+
+    // Maturity ranges
+    if (filters.maturityRanges.length > 0) {
+      const days = getMaturityDays(loan.maturityDate);
+      if (
+        !filters.maturityRanges.some((range) =>
+          matchesMaturityRange(days, range)
+        )
+      )
+        return false;
+    }
+
+    // Callable
+    if (filters.callable === "callable" && !loan.callable) return false;
+    if (filters.callable === "non-callable" && loan.callable) return false;
+
+    // Min principal
+    if (
+      filters.minPrincipal !== null &&
+      loan.principalAmount < filters.minPrincipal
+    )
+      return false;
+
+    // Max principal
+    if (
+      filters.maxPrincipal !== null &&
+      loan.principalAmount > filters.maxPrincipal
+    )
+      return false;
+
+    return true;
+  });
 }
 
 const columns: ColumnDef<ActiveLoan, unknown>[] = [
@@ -152,11 +231,20 @@ const columns: ColumnDef<ActiveLoan, unknown>[] = [
   },
 ];
 
-export function ActiveLoansTable() {
+interface ActiveLoansTableProps {
+  filters?: FilterState;
+}
+
+export function ActiveLoansTable({ filters }: ActiveLoansTableProps) {
+  const filteredData = React.useMemo(
+    () => (filters ? applyFilters(activeLoans, filters) : activeLoans),
+    [filters]
+  );
+
   return (
     <DataTable
       columns={columns}
-      data={activeLoans}
+      data={filteredData}
       searchable
       searchPlaceholder="Search active loans..."
       pageSize={10}

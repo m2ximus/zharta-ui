@@ -98,7 +98,7 @@ export function AuditedBy() {
                 alt={partner.name}
                 width={100}
                 height={36}
-                className="h-7 md:h-9 w-auto opacity-50 hover:opacity-80 transition-opacity duration-300 invert"
+                className="h-7 md:h-9 w-auto opacity-50 hover:opacity-80 transition-opacity duration-300 brightness-0 invert"
               />
             ))}
           </div>
@@ -111,7 +111,7 @@ export function AuditedBy() {
             alt="Funded by the European Union"
             width={200}
             height={60}
-            className="h-12 w-auto opacity-40 invert"
+            className="h-12 w-auto opacity-40 brightness-0 invert"
           />
         </div>
       </div>

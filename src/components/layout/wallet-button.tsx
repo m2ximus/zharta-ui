@@ -1,6 +1,6 @@
 "use client";
 
-import { Wallet } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface WalletButtonProps {
@@ -11,16 +11,16 @@ export function WalletButton({ className }: WalletButtonProps) {
   return (
     <button
       className={cn(
-        "inline-flex items-center gap-2",
-        "bg-[var(--color-primary)] text-black",
-        "rounded-full px-4 py-2",
-        "font-mono text-sm font-medium",
-        "hover:bg-[var(--color-primary-hover)] transition-colors cursor-pointer",
+        "inline-flex items-center gap-1.5",
+        "border border-[var(--border)] hover:border-[var(--border-hover)]",
+        "rounded-[var(--radius-card)] px-3 py-1.5",
+        "font-[family-name:var(--font-mono)] text-xs text-[var(--foreground-muted)]",
+        "transition-colors cursor-pointer",
         className
       )}
     >
-      <Wallet className="h-4 w-4" />
-      <span>0x1a2B...9f4E</span>
+      <span>0xe0...ABd9</span>
+      <ChevronDown className="w-3 h-3" />
     </button>
   );
 }

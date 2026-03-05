@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface PortfolioToggleProps {
@@ -10,28 +9,22 @@ interface PortfolioToggleProps {
 
 export function PortfolioToggle({ active, onToggle }: PortfolioToggleProps) {
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-[var(--background-tertiary)] p-1">
+    <div className="flex items-center gap-6">
       {(["lending", "borrowing"] as const).map((mode) => (
         <button
           key={mode}
           onClick={() => onToggle(mode)}
           className={cn(
-            "relative px-5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200",
+            "relative pb-1 text-sm font-medium transition-colors",
             active === mode
-              ? "text-black"
+              ? "text-[var(--foreground)]"
               : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
           )}
         >
+          {mode === "lending" ? "Lending" : "Borrowing"}
           {active === mode && (
-            <motion.div
-              layoutId="portfolio-toggle-active"
-              className="absolute inset-0 rounded-full bg-[var(--color-primary)]"
-              transition={{ type: "spring", stiffness: 500, damping: 35 }}
-            />
+            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)]" />
           )}
-          <span className="relative z-10">
-            {mode === "lending" ? "Lending" : "Borrowing"}
-          </span>
         </button>
       ))}
     </div>

@@ -56,7 +56,7 @@ export default function BorrowPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
-              Easy Borrow
+              Borrow
             </h1>
             <SandboxToggle
               enabled={sandboxEnabled}
@@ -114,7 +114,7 @@ export default function BorrowPage() {
                 </div>
               </Card>
 
-              {/* LTV — integrated, same visual flow */}
+              {/* LTV — interactive */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-1">
                   <div>
@@ -122,19 +122,54 @@ export default function BorrowPage() {
                       Loan to Value (LTV)
                     </h3>
                     <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
-                      Ratio of the collateral to the borrowed value
+                      Drag to adjust or enter a value
                     </p>
                   </div>
-                  <div className="text-right">
-                    <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">
-                      {ltv > 0 ? `${ltv.toFixed(2)}%` : "0.00%"}
-                    </span>
-                    <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+                  <div className="text-right flex items-baseline gap-1">
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      value={ltv > 0 ? ltv.toFixed(2) : "0.00"}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "" || /^\d*\.?\d*$/.test(val)) {
+                          const newLtv = Math.min(parseFloat(val) || 0, 80);
+                          if (collateralValueUsd > 0) {
+                            const newPrincipal = (newLtv / 100) * collateralValueUsd;
+                            setPrincipalAmount(newPrincipal > 0 ? newPrincipal.toFixed(2) : "");
+                          }
+                        }
+                      }}
+                      className="w-20 bg-transparent text-right font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)] outline-none border-b border-[var(--border)] focus:border-[var(--color-primary)] transition-colors"
+                    />
+                    <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">%</span>
+                    <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)] ml-2">
                       max. 80.00%
                     </p>
                   </div>
                 </div>
-                <div className="mt-4">
+                {/* Slider */}
+                <div className="mt-4 mb-2">
+                  <input
+                    type="range"
+                    min="0"
+                    max="80"
+                    step="0.5"
+                    value={Math.min(ltv, 80)}
+                    onChange={(e) => {
+                      const newLtv = parseFloat(e.target.value);
+                      if (collateralValueUsd > 0) {
+                        const newPrincipal = (newLtv / 100) * collateralValueUsd;
+                        setPrincipalAmount(newPrincipal > 0 ? newPrincipal.toFixed(2) : "");
+                      }
+                    }}
+                    className="w-full h-2 rounded-full appearance-none cursor-pointer accent-[var(--color-primary)]"
+                    style={{
+                      background: `linear-gradient(to right, #00D4AA ${(Math.min(ltv, 80) / 80) * 100}%, var(--muted) ${(Math.min(ltv, 80) / 80) * 100}%)`,
+                    }}
+                  />
+                </div>
+                <div className="mt-2">
                   <LtvMeter
                     currentLtv={ltv}
                     maxLtv={80}

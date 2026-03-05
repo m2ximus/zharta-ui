@@ -5,6 +5,7 @@ import { TrustedBy } from "@/components/marketing/trusted-by";
 import { AuditedBy } from "@/components/marketing/audited-by";
 import { WhyZharta } from "@/components/marketing/why-zharta";
 import { FeaturesSection } from "@/components/marketing/features-section";
+import { ParameterCustomization } from "@/components/marketing/parameter-customization";
 import { ValueAnimation } from "@/components/marketing/value-animation";
 import { TestimonialsSection } from "@/components/marketing/testimonials-section";
 import { CtaSection } from "@/components/marketing/cta-section";
@@ -20,6 +21,7 @@ export default function HomePage() {
       <AuditedBy />
       <WhyZharta />
       <FeaturesSection />
+      <ParameterCustomization />
       <ValueAnimation />
       <TestimonialsSection />
       <CtaSection />

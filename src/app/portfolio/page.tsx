@@ -7,7 +7,6 @@ import { PortfolioToggle } from "@/components/portfolio/portfolio-toggle";
 import { StatCardsGrid } from "@/components/portfolio/stat-cards-grid";
 import { HistoricalChart } from "@/components/portfolio/historical-chart";
 import { PortfolioLoanTable } from "@/components/portfolio/portfolio-loan-table";
-import { AlertsSidebar } from "@/components/portfolio/alerts-sidebar";
 import {
   historicalData,
   borrowingHistoricalData,
@@ -26,31 +25,25 @@ export default function PortfolioPage() {
       <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Page header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-            <h1 className="text-3xl font-[family-name:var(--font-display)] font-bold text-[var(--foreground)]">
-              Portfolio
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+            <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
+              {mode === "lending" ? "Lending Portfolio" : "Borrowing Portfolio"}
             </h1>
             <PortfolioToggle active={mode} onToggle={setMode} />
           </div>
 
           {/* Stat cards */}
-          <div className="mb-6">
+          <div className="mb-8">
             <StatCardsGrid mode={mode} />
           </div>
 
-          {/* Main content: chart + table on left, alerts sidebar on right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Left column */}
-            <div className="lg:col-span-8 flex flex-col gap-6">
-              <HistoricalChart data={chartData} />
-              <PortfolioLoanTable />
-            </div>
-
-            {/* Right column: alerts sidebar */}
-            <div className="lg:col-span-4">
-              <AlertsSidebar />
-            </div>
+          {/* Chart */}
+          <div className="mb-8">
+            <HistoricalChart data={chartData} />
           </div>
+
+          {/* Loan table - full width */}
+          <PortfolioLoanTable />
         </PageTransition>
       </main>
     </div>
