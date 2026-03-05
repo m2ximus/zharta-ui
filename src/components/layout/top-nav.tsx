@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ZhartaLogo } from "./zharta-logo";
-import { ThemeToggle } from "./theme-toggle";
 
 const resourceLinks = [
   { label: "Documentation", href: "/docs" },
@@ -86,8 +85,6 @@ export function TopNav() {
                 )}
               </div>
 
-              <ThemeToggle />
-
               <Link
                 href="/portfolio"
                 className="inline-flex items-center px-5 py-2 text-sm font-medium rounded-full bg-[var(--color-primary)] text-black hover:bg-[var(--color-primary-hover)] transition-colors"
@@ -153,7 +150,6 @@ export function TopNav() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-[var(--border)] flex flex-col gap-4">
-              <ThemeToggle />
               <Link
                 href="/portfolio"
                 className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-full bg-[var(--color-primary)] text-black hover:bg-[var(--color-primary-hover)] transition-colors"

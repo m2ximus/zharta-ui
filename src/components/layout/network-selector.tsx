@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -8,19 +9,81 @@ import { cn } from "@/lib/utils";
 interface Network {
   id: string;
   name: string;
-  icon: string;
+  iconUrl: string | null;
   color: string;
   connected?: boolean;
 }
 
 const networks: Network[] = [
-  { id: "ethereum", name: "Ethereum", icon: "⟠", color: "#627EEA" },
-  { id: "base", name: "Base", icon: "◉", color: "#0052FF" },
-  { id: "arbitrum", name: "Arbitrum", icon: "◆", color: "#28A0F0" },
-  { id: "avalanche", name: "Avalanche", icon: "▲", color: "#E84142" },
-  { id: "optimism", name: "Optimism", icon: "◎", color: "#FF0420" },
-  { id: "sandbox", name: "Sandbox", icon: "✦", color: "var(--color-primary)", connected: true },
+  {
+    id: "ethereum",
+    name: "Ethereum",
+    iconUrl: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/eth.svg",
+    color: "#627EEA",
+  },
+  {
+    id: "base",
+    name: "Base",
+    iconUrl: "https://raw.githubusercontent.com/base-org/brand-kit/main/logo/symbol/Base_Symbol_Blue.svg",
+    color: "#0052FF",
+  },
+  {
+    id: "arbitrum",
+    name: "Arbitrum",
+    iconUrl: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/arb.svg",
+    color: "#28A0F0",
+  },
+  {
+    id: "avalanche",
+    name: "Avalanche",
+    iconUrl: "https://raw.githubusercontent.com/spothq/cryptocurrency-icons/master/svg/color/avax.svg",
+    color: "#E84142",
+  },
+  {
+    id: "optimism",
+    name: "Optimism",
+    iconUrl: "https://raw.githubusercontent.com/ethereum-optimism/brand-kit/main/assets/svg/Profile-Logo.svg",
+    color: "#FF0420",
+  },
+  {
+    id: "sandbox",
+    name: "Sandbox",
+    iconUrl: null,
+    color: "var(--color-primary)",
+    connected: true,
+  },
 ];
+
+function NetworkIcon({ network, size }: { network: Network; size: number }) {
+  const [error, setError] = React.useState(false);
+
+  if (!network.iconUrl || error) {
+    return (
+      <span
+        className="flex items-center justify-center rounded-full text-white font-bold"
+        style={{
+          width: size,
+          height: size,
+          backgroundColor: network.color,
+          fontSize: size * 0.45,
+        }}
+      >
+        {network.name[0]}
+      </span>
+    );
+  }
+
+  return (
+    <Image
+      src={network.iconUrl}
+      alt={network.name}
+      width={size}
+      height={size}
+      className="flex-shrink-0"
+      onError={() => setError(true)}
+    />
+  );
+}
 
 export function NetworkSelector() {
   const [open, setOpen] = React.useState(false);
@@ -36,12 +99,7 @@ export function NetworkSelector() {
         className="flex items-center gap-1.5 h-9 px-2.5 rounded-full border border-[var(--border)] hover:border-[var(--border-hover)] transition-colors cursor-pointer"
         title={current.name}
       >
-        <span
-          className="text-base leading-none"
-          style={{ color: current.color }}
-        >
-          {current.icon}
-        </span>
+        <NetworkIcon network={current} size={18} />
         <span className="text-xs text-[var(--foreground-muted)] hidden sm:inline">
           {current.name}
         </span>
@@ -75,7 +133,7 @@ export function NetworkSelector() {
                 </h2>
                 <button
                   onClick={() => setOpen(false)}
-                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--muted)] transition-colors text-[var(--foreground-muted)]"
+                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[var(--muted)] transition-colors text-[var(--foreground-muted)] cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -91,18 +149,13 @@ export function NetworkSelector() {
                       setOpen(false);
                     }}
                     className={cn(
-                      "flex flex-col items-center gap-2 p-6 rounded-[var(--radius-card)] border-2 transition-all cursor-pointer hover:bg-[var(--muted)]/30",
+                      "flex flex-col items-center gap-2.5 p-6 rounded-[var(--radius-card)] border-2 transition-all cursor-pointer hover:bg-[var(--muted)]/30",
                       selected === network.id
                         ? "border-[var(--color-primary)] bg-[var(--color-primary)]/5"
                         : "border-[var(--border)] hover:border-[var(--foreground-muted)]/30"
                     )}
                   >
-                    <span
-                      className="text-3xl leading-none"
-                      style={{ color: network.color }}
-                    >
-                      {network.icon}
-                    </span>
+                    <NetworkIcon network={network} size={36} />
                     <span className="text-sm font-medium text-[var(--foreground)]">
                       {network.name}
                     </span>

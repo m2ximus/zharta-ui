@@ -124,14 +124,14 @@ export default function SavingsPage() {
                 <div className="absolute -bottom-16 -left-16 w-48 h-48 rounded-full bg-[var(--color-primary)] opacity-[0.03] blur-3xl pointer-events-none" />
 
                 <div className="relative z-10">
-                  <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl text-[var(--foreground)] mb-3">
+                  <h2 className="font-[family-name:var(--font-display)] text-2xl md:text-3xl text-white mb-3">
                     Deposit your {current.symbol} and earn{" "}
                     <span className="text-[var(--color-primary)]">
                       {current.apy.toFixed(2)}%
                     </span>{" "}
                     APY!
                   </h2>
-                  <p className="text-sm text-[var(--foreground-muted)] max-w-lg mb-6 leading-relaxed">
+                  <p className="text-sm text-white/50 max-w-lg mb-6 leading-relaxed">
                     Earn yield on your idle {current.symbol} by depositing into
                     the Zharta savings vault. Withdraw anytime with no lock-up
                     period. Interest is accrued continuously and compounded
