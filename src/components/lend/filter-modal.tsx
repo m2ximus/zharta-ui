@@ -238,8 +238,8 @@ export function FilterModal({ filters, onFiltersChange }: FilterModalProps) {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="font-[family-name:var(--font-display)] text-xl">
-              Filter Parameters
+            <DialogTitle className="font-[family-name:var(--font-display)] text-2xl md:text-3xl">
+              Customize
             </DialogTitle>
             <DialogDescription>
               Set your lending criteria to find matching opportunities
