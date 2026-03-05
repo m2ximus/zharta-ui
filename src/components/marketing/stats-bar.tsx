@@ -8,36 +8,38 @@ interface StatItem {
   prefix: string;
   suffix: string;
   label: string;
+  decimals?: number;
 }
 
 const stats: StatItem[] = [
   {
-    value: "12",
-    numericValue: 12,
+    value: "30",
+    numericValue: 30,
     prefix: "$",
     suffix: "M+",
-    label: "Total Loans",
+    label: "Loans originated",
   },
   {
-    value: "20",
-    numericValue: 20,
-    prefix: "$",
-    suffix: "M+",
-    label: "Total Collateralized",
-  },
-  {
-    value: "5",
-    numericValue: 5,
+    value: "5000",
+    numericValue: 5000,
     prefix: "",
-    suffix: "K+",
-    label: "Transactions",
+    suffix: "+",
+    label: "Transactions settled",
   },
   {
-    value: "1",
-    numericValue: 1,
+    value: "10",
+    numericValue: 10,
+    prefix: "",
+    suffix: "/10",
+    label: "Multiple audits",
+  },
+  {
+    value: "4.5",
+    numericValue: 4.5,
     prefix: "$",
     suffix: "M",
-    label: "Biggest Loan",
+    label: "Raised to date",
+    decimals: 1,
   },
 ];
 
@@ -46,29 +48,28 @@ function AnimatedCounter({
   prefix,
   suffix,
   isVisible,
+  decimals = 0,
 }: {
   target: number;
   prefix: string;
   suffix: string;
   isVisible: boolean;
+  decimals?: number;
 }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!isVisible) return;
 
-    let start = 0;
     const duration = 1500;
     const startTime = performance.now();
 
     function animate(currentTime: number) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-
-      // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      start = Math.round(eased * target);
-      setCount(start);
+      const current = eased * target;
+      setCount(current);
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -78,10 +79,17 @@ function AnimatedCounter({
     requestAnimationFrame(animate);
   }, [isVisible, target]);
 
+  const displayValue =
+    decimals > 0
+      ? count.toFixed(decimals)
+      : target >= 1000
+        ? Math.round(count).toLocaleString()
+        : Math.round(count);
+
   return (
-    <span className="font-[family-name:var(--font-mono)] text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--color-dark-text)] tabular-nums">
+    <span className="font-[family-name:var(--font-mono)] text-3xl md:text-4xl font-bold text-[var(--color-dark-text)] tabular-nums">
       {prefix}
-      {count}
+      {displayValue}
       {suffix}
     </span>
   );
@@ -112,7 +120,7 @@ export function StatsBar() {
   return (
     <section
       ref={ref}
-      className="bg-[var(--color-dark-bg-secondary)] py-16 md:py-20 border-y border-[var(--color-dark-border)]"
+      className="bg-[var(--color-dark-bg)] py-16 md:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0">
@@ -138,6 +146,7 @@ export function StatsBar() {
                   prefix={stat.prefix}
                   suffix={stat.suffix}
                   isVisible={isVisible}
+                  decimals={stat.decimals}
                 />
                 <p className="mt-2 text-sm text-[var(--color-dark-text-muted)] font-[family-name:var(--font-body)]">
                   {stat.label}

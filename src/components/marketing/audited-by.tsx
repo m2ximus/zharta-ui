@@ -3,17 +3,20 @@ import { ExternalLink, Shield } from "lucide-react";
 
 const auditors = [
   {
-    name: "Hexens",
+    name: "Hacken",
+    logo: "/logos/hacken.png",
     subtitle: "Smart Contract Audit",
     url: "#",
   },
   {
-    name: "Hacken",
+    name: "Hexens",
+    logo: "/logos/hexens.png",
     subtitle: "Smart Contract Audit",
     url: "#",
   },
   {
     name: "Red4Sec",
+    logo: "/logos/red4sec.png",
     subtitle: "Smart Contract Audit",
     url: "#",
   },
@@ -72,12 +75,16 @@ export function AuditedBy() {
             <a
               key={auditor.name}
               href={auditor.url}
-              className="group relative flex flex-col items-center p-8 bg-[var(--color-dark-bg-secondary)] border border-[var(--color-dark-border)] rounded-[var(--radius-card)] hover:border-[var(--color-dark-border-hover)] transition-all duration-300"
+              className="group relative flex flex-col items-center justify-center p-8 bg-[var(--color-dark-bg-secondary)] border border-[var(--color-dark-border)] rounded-[var(--radius-card)] hover:border-[var(--color-dark-border-hover)] transition-all duration-300"
             >
-              <span className="text-xl font-semibold text-[var(--color-dark-text)] font-[family-name:var(--font-body)] mb-1">
-                {auditor.name}
-              </span>
-              <span className="text-xs text-[var(--color-dark-text-muted)] font-[family-name:var(--font-body)]">
+              <Image
+                src={auditor.logo}
+                alt={auditor.name}
+                width={140}
+                height={48}
+                className="h-10 w-auto brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+              />
+              <span className="text-xs text-[var(--color-dark-text-muted)] font-[family-name:var(--font-body)] mt-3">
                 {auditor.subtitle}
               </span>
               <ExternalLink className="w-3.5 h-3.5 text-[var(--color-dark-text-muted)] group-hover:text-[var(--color-primary)] transition-colors absolute top-4 right-4" />
@@ -104,14 +111,14 @@ export function AuditedBy() {
           </div>
         </div>
 
-        {/* EU Funded badge */}
+        {/* Government Funding */}
         <div className="mt-16 flex justify-center">
           <Image
-            src="/logos/eu-funded.svg"
-            alt="Funded by the European Union"
-            width={200}
+            src="/logos/gov-funding-logo-row.png"
+            alt="Government Funding"
+            width={600}
             height={60}
-            className="h-12 w-auto opacity-40 brightness-0 invert"
+            className="h-10 md:h-12 w-auto opacity-50 brightness-0 invert"
           />
         </div>
       </div>
