@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface LtvMeterProps {
@@ -37,16 +38,17 @@ export function LtvMeter({
     <div className={cn("w-full", className)}>
       {/* Current LTV label */}
       <div className="relative h-6 mb-1">
-        <div
+        <motion.div
           className="absolute -translate-x-1/2 flex flex-col items-center"
-          style={{ left: indicatorPosition }}
+          animate={{ left: indicatorPosition }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           <span
             className={cn("text-xs font-mono font-semibold", zoneColor)}
           >
             {clampedLtv.toFixed(1)}%
           </span>
-        </div>
+        </motion.div>
       </div>
 
       {/* Bar */}
@@ -84,9 +86,9 @@ export function LtvMeter({
         )}
 
         {/* Indicator circle */}
-        <div
+        <motion.div
           className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-white shadow-md"
-          style={{
+          animate={{
             left: indicatorPosition,
             backgroundColor:
               clampedLtv <= 40
@@ -97,6 +99,7 @@ export function LtvMeter({
                     ? "#f97316"
                     : "#ef4444",
           }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       </div>
 

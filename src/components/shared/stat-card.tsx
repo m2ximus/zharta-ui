@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
@@ -70,11 +71,13 @@ export function StatCard({
   className,
 }: StatCardProps) {
   return (
-    <div
+    <motion.div
       className={cn(
         "bg-[var(--card)] border border-[var(--border)] rounded-[3px] border-l-[3px] border-l-[var(--color-primary)] p-4",
         className
       )}
+      whileHover={{ y: -2, boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
@@ -115,6 +118,6 @@ export function StatCard({
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import { AlertTriangle, Info, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -67,12 +70,19 @@ export function AlertsSidebar() {
 
       <div className="overflow-y-auto max-h-[480px]">
         <div className="flex flex-col">
-          {alerts.map((alert) => {
+          {alerts.map((alert, index) => {
             const styles = getSeverityStyles(alert.severity);
 
             return (
-              <div
+              <motion.div
                 key={alert.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: "easeOut",
+                  delay: index * 0.06,
+                }}
                 className={cn(
                   "p-4 border-b border-[var(--border)] last:border-b-0 border-l-[3px] transition-colors hover:bg-[var(--background-secondary)]",
                   styles.border,
@@ -102,7 +112,7 @@ export function AlertsSidebar() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

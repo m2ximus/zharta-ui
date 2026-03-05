@@ -2,6 +2,7 @@
 
 import { DollarSign, FileText, TrendingUp, Percent } from "lucide-react";
 import { StatCard } from "@/components/shared/stat-card";
+import { StaggerChildren, StaggerItem } from "@/components/shared/stagger-children";
 import { formatCompactCurrency, formatPercent } from "@/lib/utils";
 import { lendingStats, borrowingStats } from "@/data/portfolio";
 
@@ -83,16 +84,17 @@ export function StatCardsGrid({ mode }: StatCardsGridProps) {
         ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card) => (
-        <StatCard
-          key={card.title}
-          title={card.title}
-          value={card.value}
-          icon={card.icon}
-          sparklineData={card.sparklineData}
-        />
+        <StaggerItem key={card.title}>
+          <StatCard
+            title={card.title}
+            value={card.value}
+            icon={card.icon}
+            sparklineData={card.sparklineData}
+          />
+        </StaggerItem>
       ))}
-    </div>
+    </StaggerChildren>
   );
 }
