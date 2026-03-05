@@ -93,7 +93,7 @@ const columns: ColumnDef<LoanRequest, unknown>[] = [
     header: "Collateral",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <AssetBadge asset={row.original.collateralAsset} size="sm" />
+        <AssetBadge asset={row.original.collateralAsset} size="md" />
         <span className="font-[family-name:var(--font-mono)] text-sm">
           {row.original.collateralAmount.toLocaleString()}
         </span>
@@ -105,7 +105,7 @@ const columns: ColumnDef<LoanRequest, unknown>[] = [
     header: "Principal",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <AssetBadge asset={row.original.principalAsset} size="sm" />
+        <AssetBadge asset={row.original.principalAsset} size="md" />
         <span className="font-[family-name:var(--font-mono)] text-sm">
           {formatCurrency(row.original.principalAmount)}
         </span>

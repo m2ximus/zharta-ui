@@ -26,8 +26,8 @@ export default function PortfolioPage() {
       <main className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Page header */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <h1 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl md:text-5xl text-[var(--foreground)]">
+          <div className="flex items-center justify-between gap-4 mb-8">
+            <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-4xl md:text-5xl text-[var(--foreground)]">
               {mode === "lending" ? "Lending Portfolio" : "Borrowing Portfolio"}
             </h1>
             <PortfolioToggle active={mode} onToggle={setMode} />
@@ -38,16 +38,14 @@ export default function PortfolioPage() {
             <StatCardsGrid mode={mode} />
           </div>
 
-          {/* Health factor */}
+          {/* Chart + Health factor side-by-side on desktop */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div className="lg:col-span-2">
+              <HistoricalChart data={chartData} />
+            </div>
             <div className="lg:col-span-1">
               <HealthFactorGauge value={mode === "lending" ? 3.2 : 2.1} />
             </div>
-          </div>
-
-          {/* Chart */}
-          <div className="mb-8">
-            <HistoricalChart data={chartData} />
           </div>
 
           {/* Loan table - full width */}

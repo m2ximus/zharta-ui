@@ -107,7 +107,7 @@ const columns: ColumnDef<ActiveLoan, unknown>[] = [
     header: "Collateral",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <AssetBadge asset={row.original.collateralAsset} size="sm" />
+        <AssetBadge asset={row.original.collateralAsset} size="md" />
         <span className="font-[family-name:var(--font-mono)] text-sm">
           {row.original.collateralAmount.toLocaleString()}
         </span>

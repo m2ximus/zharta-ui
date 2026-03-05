@@ -14,20 +14,22 @@ const columns: ColumnDef<Market, unknown>[] = [
     accessorKey: "collateralAsset",
     header: "Market",
     cell: ({ row }) => (
-      <div className="flex items-center gap-3">
-        <AssetBadge asset={row.original.collateralAsset} size="md" iconOnly />
-        <span className="font-medium text-[var(--foreground)]">
-          {row.original.collateralAsset}
-          <span className="text-[var(--foreground-muted)] font-normal">
-            {" / "}{row.original.principalAsset}
+      <div className="flex items-center gap-2.5">
+        <AssetBadge asset={row.original.collateralAsset} size="lg" iconOnly />
+        <div className="flex flex-col">
+          <span className="font-medium text-sm text-[var(--foreground)] leading-tight">
+            {row.original.collateralAsset}
           </span>
-        </span>
+          <span className="text-[11px] text-[var(--foreground-muted)] leading-tight">
+            / {row.original.principalAsset}
+          </span>
+        </div>
       </div>
     ),
   },
   {
     accessorKey: "availableLiquidity",
-    header: "Total supplied",
+    header: "Supplied",
     cell: ({ row }) => (
       <span className="font-[family-name:var(--font-mono)] text-sm text-[var(--foreground)]">
         {formatCompactCurrency(
@@ -38,7 +40,7 @@ const columns: ColumnDef<Market, unknown>[] = [
   },
   {
     accessorKey: "totalDebt",
-    header: "Total borrowed",
+    header: "Borrowed",
     cell: ({ row }) => (
       <span className="font-[family-name:var(--font-mono)] text-sm text-[var(--foreground)]">
         {formatCompactCurrency(row.original.totalDebt)}

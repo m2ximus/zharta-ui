@@ -77,7 +77,7 @@ export function CollateralInput({
 
           {/* Dropdown */}
           {open && (
-            <div className="absolute top-full left-0 mt-2 w-56 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 py-1 overflow-hidden">
+            <div className="absolute top-full left-0 mt-2 w-48 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] shadow-lg z-50 py-1 overflow-hidden">
               {COLLATERAL_ASSETS.map((a) => (
                 <button
                   key={a}
@@ -90,14 +90,9 @@ export function CollateralInput({
                     a === asset && "bg-[var(--muted)]"
                   )}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <AssetBadge asset={a} size="md" />
-                    <span className="text-sm font-medium text-[var(--foreground)]">
-                      {assets[a]?.name || a}
-                    </span>
-                  </div>
+                  <AssetBadge asset={a} size="md" />
                   <span className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
-                    Balance{"\u00A0"}{MOCK_BALANCES[a] || "0"}
+                    {MOCK_BALANCES[a] || "0"}
                   </span>
                 </button>
               ))}
