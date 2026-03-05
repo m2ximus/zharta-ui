@@ -73,7 +73,7 @@ export function StatCard({
   return (
     <motion.div
       className={cn(
-        "bg-[var(--card)] border border-[var(--border)] rounded-[3px] border-l-[3px] border-l-[var(--color-primary)] p-4",
+        "bg-[var(--card)] border border-[var(--border)] rounded-[3px] border-l-[3px] border-l-[var(--color-primary)] p-5 md:p-6",
         className
       )}
       whileHover={{ y: -2, boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}
@@ -81,7 +81,7 @@ export function StatCard({
     >
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-2">
             {icon && (
               <span className="text-[var(--foreground-muted)]">{icon}</span>
             )}
@@ -91,7 +91,7 @@ export function StatCard({
           </div>
 
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-mono font-semibold text-[var(--foreground)]">
+            <span className="text-3xl md:text-4xl font-mono font-bold text-[var(--foreground)]">
               {value}
             </span>
 

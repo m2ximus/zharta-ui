@@ -12,9 +12,9 @@ export function ZhartaLogo({
   size = "md",
 }: ZhartaLogoProps) {
   const dimensions = {
-    sm: { icon: 24, fontSize: 12, gap: 6 },
-    md: { icon: 32, fontSize: 14, gap: 8 },
-    lg: { icon: 40, fontSize: 18, gap: 10 },
+    sm: { icon: 32, fontSize: 13, gap: 8 },
+    md: { icon: 40, fontSize: 16, gap: 10 },
+    lg: { icon: 56, fontSize: 20, gap: 12 },
   };
 
   const d = dimensions[size];
@@ -24,7 +24,7 @@ export function ZhartaLogo({
       <svg
         width={d.icon}
         height={d.icon}
-        viewBox="0 0 236 236"
+        viewBox="52 51 132 134"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
