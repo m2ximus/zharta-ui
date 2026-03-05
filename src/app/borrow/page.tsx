@@ -13,7 +13,7 @@ import { BorrowRateCard } from "@/components/borrow/borrow-rate-card";
 import { BorrowSummary } from "@/components/borrow/borrow-summary";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRightLeft } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type { CollateralType, PrincipalType } from "@/types";
 
 const MOCK_PRICES: Record<string, number> = {
@@ -21,12 +21,14 @@ const MOCK_PRICES: Record<string, number> = {
   WETH: 3800,
   cbBTC: 67000,
   ACRED: 1.02,
+  wstETH: 4200,
+  rETH: 4100,
 };
 
 export default function BorrowPage() {
   const [sandboxEnabled, setSandboxEnabled] = React.useState(false);
   const [collateralAsset, setCollateralAsset] =
-    React.useState<CollateralType>("WETH");
+    React.useState<CollateralType>("wstETH");
   const [collateralAmount, setCollateralAmount] = React.useState("10000");
   const [principalAsset, setPrincipalAsset] =
     React.useState<PrincipalType>("USDC");
@@ -36,7 +38,6 @@ export default function BorrowPage() {
   const [callable, setCallable] = React.useState(false);
   const [callWindow, setCallWindow] = React.useState(7);
 
-  // Derived values
   const price = MOCK_PRICES[collateralAsset] ?? 0;
   const numericCollateral = parseFloat(collateralAmount) || 0;
   const numericPrincipal = parseFloat(principalAmount) || 0;
@@ -50,12 +51,12 @@ export default function BorrowPage() {
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1200px] px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
-            <h1 className="font-[family-name:var(--font-display)] text-3xl text-[var(--foreground)]">
-              Borrow
+            <h1 className="font-[family-name:var(--font-display)] text-4xl md:text-5xl text-[var(--foreground)]">
+              Easy Borrow
             </h1>
             <SandboxToggle
               enabled={sandboxEnabled}
@@ -63,17 +64,16 @@ export default function BorrowPage() {
             />
           </div>
 
-          {/* Main layout: Form + Rate card */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Left: Deposit + Borrow side-by-side, LTV below */}
+            {/* Left column — main form */}
             <div className="lg:col-span-8 space-y-4">
-              {/* Side-by-side Deposit / Borrow cards (like Spark) */}
+              {/* Deposit + Borrow side-by-side */}
               <Card className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
-                  {/* Deposit card */}
-                  <div className="pr-0 md:pr-4 md:border-r border-[var(--border)]">
+                  {/* Deposit */}
+                  <div className="pr-0 md:pr-5 md:border-r border-[var(--border)]">
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                      <span className="text-sm font-medium text-[var(--foreground)]">
                         Deposit
                       </span>
                       <span className="text-xs text-[var(--foreground-muted)] cursor-pointer hover:text-[var(--color-primary)] transition-colors">
@@ -89,17 +89,17 @@ export default function BorrowPage() {
                     />
                   </div>
 
-                  {/* Center connector */}
+                  {/* Sparkle connector */}
                   <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 hidden md:flex">
-                    <div className="w-10 h-10 rounded-full bg-[var(--background)] border border-[var(--border)] flex items-center justify-center">
-                      <ArrowRightLeft className="w-4 h-4 text-[var(--color-primary)]" />
+                    <div className="w-9 h-9 rounded-full bg-[var(--background)] border border-[var(--border)] flex items-center justify-center shadow-sm">
+                      <Sparkles className="w-4 h-4 text-[var(--color-primary)]" />
                     </div>
                   </div>
 
-                  {/* Borrow card */}
-                  <div className="pl-0 md:pl-4 pt-4 md:pt-0">
+                  {/* Borrow */}
+                  <div className="pl-0 md:pl-5 pt-4 md:pt-0">
                     <div className="mb-4">
-                      <span className="text-sm font-medium text-[var(--foreground-muted)] uppercase tracking-wider">
+                      <span className="text-sm font-medium text-[var(--foreground)]">
                         Borrow
                       </span>
                     </div>
@@ -114,31 +114,31 @@ export default function BorrowPage() {
                 </div>
               </Card>
 
-              {/* LTV Section */}
+              {/* LTV — integrated, same visual flow */}
               <Card className="p-6">
                 <div className="flex items-center justify-between mb-1">
                   <div>
-                    <h3 className="text-base font-medium text-[var(--foreground)]">
+                    <h3 className="text-sm font-medium text-[var(--foreground)]">
                       Loan to Value (LTV)
                     </h3>
-                    <p className="text-sm text-[var(--foreground-muted)]">
+                    <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
                       Ratio of the collateral to the borrowed value
                     </p>
                   </div>
                   <div className="text-right">
-                    <span className="font-[family-name:var(--font-mono)] text-xl font-semibold text-[var(--foreground)]">
-                      {ltv > 0 ? `${ltv.toFixed(2)}%` : "--"}
+                    <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">
+                      {ltv > 0 ? `${ltv.toFixed(2)}%` : "0.00%"}
                     </span>
-                    <p className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
-                      max. 75.00%
+                    <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+                      max. 80.00%
                     </p>
                   </div>
                 </div>
                 <div className="mt-4">
                   <LtvMeter
                     currentLtv={ltv}
-                    maxLtv={75}
-                    liquidationLtv={84}
+                    maxLtv={80}
+                    liquidationLtv={82.5}
                   />
                 </div>
               </Card>
@@ -155,7 +155,7 @@ export default function BorrowPage() {
                 onCallWindowChange={setCallWindow}
               />
 
-              {/* Borrow button - full width, gradient like Spark */}
+              {/* Borrow button */}
               <Button
                 size="lg"
                 className="w-full h-14 rounded-[var(--radius-pill)] text-lg font-semibold bg-gradient-to-r from-[var(--color-primary)] to-[#00B894] text-black hover:opacity-90 transition-opacity"
@@ -165,7 +165,7 @@ export default function BorrowPage() {
               </Button>
             </div>
 
-            {/* Right: Borrow Rate + Summary */}
+            {/* Right column — Rate card + Summary */}
             <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-4">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
