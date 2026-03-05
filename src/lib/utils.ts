@@ -40,6 +40,13 @@ export function formatDate(date: Date | string): string {
   });
 }
 
+export function formatDateShort(date: Date | string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
 export function formatDaysRemaining(date: Date | string): string {
   const diff = new Date(date).getTime() - Date.now();
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));

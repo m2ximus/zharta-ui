@@ -86,7 +86,7 @@ export function PrincipalInput({
           }}
           placeholder="0"
           className={cn(
-            "w-full bg-transparent text-right text-lg font-[family-name:var(--font-mono)] font-medium",
+            "w-full bg-transparent text-right text-2xl font-[family-name:var(--font-mono)] font-semibold",
             "text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/30",
             "outline-none border-none focus:ring-0"
           )}
@@ -94,8 +94,8 @@ export function PrincipalInput({
       </div>
 
       {/* USD value */}
-      <div className="flex justify-start mt-1">
-        <span className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+      <div className="flex justify-start mt-2">
+        <span className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
           {formatCurrency(usdValue, 2)}
         </span>
       </div>

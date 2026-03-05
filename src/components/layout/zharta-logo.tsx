@@ -37,7 +37,7 @@ export function ZhartaLogo({
       </svg>
       {showText && (
         <span
-          className="font-semibold tracking-[0.08em] text-[var(--foreground)]"
+          className="font-semibold tracking-[0.08em] text-current"
           style={{ fontSize: d.fontSize }}
         >
           ZHARTA

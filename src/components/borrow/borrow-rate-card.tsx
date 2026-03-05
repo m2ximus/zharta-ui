@@ -9,31 +9,41 @@ interface BorrowRateCardProps {
 
 export function BorrowRateCard({ rate, asset }: BorrowRateCardProps) {
   return (
-    <div className="relative overflow-hidden rounded-[3px] border border-[var(--border)] bg-black/50 p-6">
-      {/* Subtle gradient glow behind the card */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/5 via-transparent to-transparent pointer-events-none" />
+    <div className="relative overflow-hidden rounded-[var(--radius-card)] p-6 bg-[#141414]">
+      {/* Background decoration */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Subtle teal glow top-right */}
+        <div className="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-[var(--color-primary)]/8 blur-3xl" />
+        {/* Very faint grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
+            backgroundSize: "24px 24px",
+          }}
+        />
+      </div>
 
       <div className="relative">
         {/* Label row */}
-        <div className="flex items-center gap-2 mb-3">
-          <AssetBadge asset={asset} size="sm" />
-          <span className="text-sm text-[var(--foreground-muted)]">
-            Borrow Rate
-          </span>
+        <div className="flex items-center gap-2.5 mb-5">
+          <AssetBadge asset={asset} size="lg" />
+          <span className="text-sm text-white/50">Borrow Rate</span>
         </div>
 
         {/* Rate display */}
         <div className="flex items-baseline gap-1">
-          <span className="text-5xl font-[family-name:var(--font-mono)] font-bold text-[var(--color-primary)] tracking-tight">
+          <span className="text-6xl font-[family-name:var(--font-mono)] font-bold text-[var(--color-primary)] tracking-tight leading-none">
             {rate.toFixed(2)}
           </span>
-          <span className="text-2xl font-[family-name:var(--font-mono)] font-bold text-[var(--color-primary)]">
+          <span className="text-3xl font-[family-name:var(--font-mono)] font-bold text-[var(--color-primary)]">
             %
           </span>
         </div>
 
-        {/* Subtle APR label */}
-        <span className="text-xs text-[var(--foreground-muted)] uppercase tracking-wider mt-1 block">
+        {/* APR label */}
+        <span className="text-xs text-white/40 uppercase tracking-wider mt-2 block">
           Annual Percentage Rate
         </span>
       </div>

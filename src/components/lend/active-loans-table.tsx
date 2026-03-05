@@ -8,7 +8,7 @@ import { StatusBadge } from "@/components/shared/status-badge";
 import { DataTable } from "@/components/shared/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn, formatAddress, formatDate, formatCurrency } from "@/lib/utils";
+import { cn, formatAddress, formatDateShort, formatCurrency } from "@/lib/utils";
 import { activeLoans } from "@/data/loans";
 import type { ActiveLoan } from "@/types";
 import type { FilterState } from "@/components/lend/filter-modal";
@@ -186,7 +186,7 @@ const columns: ColumnDef<ActiveLoan, unknown>[] = [
     accessorKey: "maturityDate",
     header: "Maturity",
     cell: ({ row }) => (
-      <span className="text-sm">{formatDate(row.original.maturityDate)}</span>
+      <span className="text-sm">{formatDateShort(row.original.maturityDate)}</span>
     ),
   },
   {

@@ -5,13 +5,17 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ZhartaLogo } from "./zharta-logo";
 import { WalletButton } from "./wallet-button";
+import { NetworkSelector } from "./network-selector";
 import { NotificationsBell } from "./notifications-bell";
 import { SettingsDropdown } from "./settings-dropdown";
 
 const appTabs = [
   { label: "Portfolio", href: "/portfolio" },
+  { label: "Savings", href: "/savings" },
+  { label: "Deposit", href: "/deposit" },
   { label: "Lend", href: "/lend" },
   { label: "Borrow", href: "/borrow" },
+  { label: "Swap", href: "/swap" },
 ];
 
 export function AppNav() {
@@ -62,6 +66,7 @@ export function AppNav() {
 
           {/* Right: notifications + wallet + settings */}
           <div className="flex items-center gap-3">
+            <NetworkSelector />
             <NotificationsBell />
             <WalletButton className="hidden sm:inline-flex" />
             <SettingsDropdown />

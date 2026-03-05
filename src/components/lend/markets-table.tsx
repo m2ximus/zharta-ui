@@ -15,11 +15,11 @@ const columns: ColumnDef<Market, unknown>[] = [
     header: "Market",
     cell: ({ row }) => (
       <div className="flex items-center gap-3">
-        <AssetBadge asset={row.original.collateralAsset} size="md" />
+        <AssetBadge asset={row.original.collateralAsset} size="md" iconOnly />
         <span className="font-medium text-[var(--foreground)]">
           {row.original.collateralAsset}
           <span className="text-[var(--foreground-muted)] font-normal">
-            {" "}/ {row.original.principalAsset}
+            {" / "}{row.original.principalAsset}
           </span>
         </span>
       </div>

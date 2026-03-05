@@ -13,19 +13,21 @@ import { Footer } from "@/components/marketing/footer";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[var(--color-dark-bg)]">
-      <TopNav />
-      <HeroSection />
-      <StatsBar />
-      <TrustedBy />
-      <AuditedBy />
-      <WhyZharta />
-      <FeaturesSection />
-      <ParameterCustomization />
-      <ValueAnimation />
-      <TestimonialsSection />
-      <CtaSection />
-      <Footer />
-    </main>
+    <div data-theme="dark">
+      <main className="min-h-screen bg-[var(--color-dark-bg)]">
+        <TopNav />
+        <HeroSection />
+        <StatsBar />
+        <TrustedBy />
+        <AuditedBy />
+        <WhyZharta />
+        <FeaturesSection />
+        <ParameterCustomization />
+        <ValueAnimation />
+        <TestimonialsSection />
+        <CtaSection />
+        <Footer />
+      </main>
+    </div>
   );
 }

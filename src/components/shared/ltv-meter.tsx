@@ -89,65 +89,58 @@ export function LtvMeter({
         </motion.div>
       </div>
 
-      {/* Bar */}
+      {/* Bar — extra padding for larger grab target */}
       <div
         ref={barRef}
         className={cn(
-          "relative h-2.5 rounded-full overflow-hidden bg-[var(--muted)]",
+          "relative h-3 rounded-full overflow-visible bg-[var(--muted)]",
           interactive && "cursor-pointer"
         )}
         onClick={handleBarClick}
       >
         {/* Gradient bar */}
         <div
-          className="absolute inset-0 rounded-full"
-          style={{
-            background: `linear-gradient(to right,
-              #00D4AA 0%,
-              #00D4AA 20%,
-              #10b981 35%,
-              #f59e0b 45%,
-              #f59e0b 55%,
-              #f97316 65%,
-              #ef4444 ${maxLtv}%,
-              #7f1d1d ${maxLtv}%,
-              #451a1a 100%
-            )`,
-          }}
-        />
+          className="absolute inset-0 rounded-full overflow-hidden"
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(to right,
+                #00D4AA 0%,
+                #00D4AA 20%,
+                #10b981 35%,
+                #f59e0b 45%,
+                #f59e0b 55%,
+                #f97316 65%,
+                #ef4444 ${maxLtv}%,
+                #7f1d1d ${maxLtv}%,
+                #451a1a 100%
+              )`,
+            }}
+          />
 
-        {/* Darkened area beyond maxLtv */}
-        <div
-          className="absolute top-0 bottom-0 right-0 bg-[var(--muted)]/70"
-          style={{ left: `${maxLtv}%` }}
-        />
+          {/* Darkened area beyond maxLtv */}
+          <div
+            className="absolute top-0 bottom-0 right-0 bg-[var(--muted)]/70"
+            style={{ left: `${maxLtv}%` }}
+          />
+        </div>
 
         {/* Liquidation LTV marker */}
         {liquidationLtv !== undefined && (
           <div
-            className="absolute top-0 bottom-0 w-[2px] bg-red-500"
+            className="absolute top-0 bottom-0 w-[2px] bg-red-500 z-10"
             style={{ left: `${liquidationLtv}%` }}
           />
         )}
 
-        {/* Indicator circle — draggable when interactive */}
+        {/* Indicator — large thumb for easy grab */}
         <motion.div
           className={cn(
-            "absolute top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-white shadow-md",
-            interactive && "cursor-grab active:cursor-grabbing",
-            dragging && "scale-110"
+            "absolute top-1/2 -translate-x-1/2 -translate-y-1/2 z-20",
+            interactive && "cursor-grab active:cursor-grabbing"
           )}
-          animate={{
-            left: indicatorPosition,
-            backgroundColor:
-              clampedLtv <= 40
-                ? "#00D4AA"
-                : clampedLtv <= 60
-                  ? "#f59e0b"
-                  : clampedLtv <= maxLtv
-                    ? "#f97316"
-                    : "#ef4444",
-          }}
+          animate={{ left: indicatorPosition }}
           transition={
             dragging
               ? { type: "tween", duration: 0 }
@@ -162,7 +155,54 @@ export function LtvMeter({
             if (!interactive) return;
             setDragging(true);
           }}
-        />
+        >
+          {/* Outer glow ring */}
+          <motion.div
+            className="absolute inset-0 rounded-full"
+            animate={{
+              boxShadow: dragging
+                ? `0 0 0 6px ${
+                    clampedLtv <= 40
+                      ? "rgba(0,212,170,0.3)"
+                      : clampedLtv <= 60
+                        ? "rgba(245,158,11,0.3)"
+                        : clampedLtv <= maxLtv
+                          ? "rgba(249,115,22,0.3)"
+                          : "rgba(239,68,68,0.3)"
+                  }`
+                : `0 0 0 3px ${
+                    clampedLtv <= 40
+                      ? "rgba(0,212,170,0.15)"
+                      : clampedLtv <= 60
+                        ? "rgba(245,158,11,0.15)"
+                        : clampedLtv <= maxLtv
+                          ? "rgba(249,115,22,0.15)"
+                          : "rgba(239,68,68,0.15)"
+                  }`,
+            }}
+            style={{ width: 24, height: 24, borderRadius: "50%" }}
+          />
+          {/* Main circle */}
+          <motion.div
+            className="w-6 h-6 rounded-full border-[3px] border-white shadow-lg"
+            animate={{
+              backgroundColor:
+                clampedLtv <= 40
+                  ? "#00D4AA"
+                  : clampedLtv <= 60
+                    ? "#f59e0b"
+                    : clampedLtv <= maxLtv
+                      ? "#f97316"
+                      : "#ef4444",
+              scale: dragging ? 1.15 : 1,
+            }}
+            transition={
+              dragging
+                ? { type: "tween", duration: 0 }
+                : { type: "spring", stiffness: 300, damping: 30 }
+            }
+          />
+        </motion.div>
       </div>
 
       {/* Max LTV label */}

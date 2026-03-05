@@ -119,7 +119,7 @@ export function CollateralInput({
             }}
             placeholder="0"
             className={cn(
-              "w-full bg-transparent text-right text-lg font-[family-name:var(--font-mono)] font-medium",
+              "w-full bg-transparent text-right text-2xl font-[family-name:var(--font-mono)] font-semibold",
               "text-[var(--foreground)] placeholder:text-[var(--foreground-muted)]/30",
               "outline-none border-none focus:ring-0"
             )}
@@ -134,11 +134,11 @@ export function CollateralInput({
       </div>
 
       {/* USD value + balance */}
-      <div className="flex items-center justify-between mt-1">
-        <span className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
+      <div className="flex items-center justify-between mt-2">
+        <span className="text-xs text-[var(--foreground-muted)] font-[family-name:var(--font-mono)]">
           {formatCurrency(usdValue, 2)}
         </span>
-        <span className="text-[11px] text-[var(--foreground-muted)]">
+        <span className="text-xs text-[var(--foreground-muted)]">
           {assetInfo ? `${numericAmount.toLocaleString()} ${asset}` : asset}
         </span>
       </div>

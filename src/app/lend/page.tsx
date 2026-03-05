@@ -63,7 +63,7 @@ export default function LendPage() {
           {/* Stat cards row — Spark style */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
             {/* Total Market Size — dark accent card */}
-            <div className="relative overflow-hidden rounded-[var(--radius-card)] bg-[var(--color-dark-bg)] border border-[var(--color-dark-border)] p-6 md:p-8">
+            <div className="relative overflow-hidden rounded-2xl bg-[var(--color-dark-bg)] border border-[var(--color-dark-border)] p-6 md:p-8">
               {/* Decorative circles */}
               <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/4 w-40 h-40 rounded-full border border-[var(--color-primary)]/20 opacity-30" />
               <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-28 h-28 rounded-full border border-[var(--color-primary)]/15 opacity-20" />
@@ -81,7 +81,7 @@ export default function LendPage() {
             </div>
 
             {/* Total Value Locked */}
-            <div className="rounded-[var(--radius-card)] bg-[var(--card)] border border-[var(--border)] p-6 md:p-8 flex flex-col justify-center items-center text-center">
+            <div className="rounded-2xl bg-[var(--card)] border border-[var(--border)] p-6 md:p-8 flex flex-col justify-center items-center text-center">
               <div className="flex items-center gap-2 mb-3">
                 <Landmark className="w-4 h-4 text-[var(--foreground-muted)]" />
                 <span className="text-xs font-medium tracking-wide uppercase text-[var(--foreground-muted)]">
@@ -94,7 +94,7 @@ export default function LendPage() {
             </div>
 
             {/* Total Borrows */}
-            <div className="rounded-[var(--radius-card)] bg-[var(--card)] border border-[var(--border)] p-6 md:p-8 flex flex-col justify-center items-center text-center">
+            <div className="rounded-2xl bg-[var(--card)] border border-[var(--border)] p-6 md:p-8 flex flex-col justify-center items-center text-center">
               <div className="flex items-center gap-2 mb-3">
                 <Banknote className="w-4 h-4 text-[var(--foreground-muted)]" />
                 <span className="text-xs font-medium tracking-wide uppercase text-[var(--foreground-muted)]">

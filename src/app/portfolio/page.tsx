@@ -5,6 +5,7 @@ import { AppNav } from "@/components/layout/app-nav";
 import { PageTransition } from "@/components/shared/page-transition";
 import { PortfolioToggle } from "@/components/portfolio/portfolio-toggle";
 import { StatCardsGrid } from "@/components/portfolio/stat-cards-grid";
+import { HealthFactorGauge } from "@/components/portfolio/health-factor-gauge";
 import { HistoricalChart } from "@/components/portfolio/historical-chart";
 import { PortfolioLoanTable } from "@/components/portfolio/portfolio-loan-table";
 import {
@@ -32,9 +33,14 @@ export default function PortfolioPage() {
             <PortfolioToggle active={mode} onToggle={setMode} />
           </div>
 
-          {/* Stat cards */}
-          <div className="mb-8">
-            <StatCardsGrid mode={mode} />
+          {/* Stat cards + Health factor */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+            <div className="lg:col-span-8">
+              <StatCardsGrid mode={mode} />
+            </div>
+            <div className="lg:col-span-4">
+              <HealthFactorGauge value={mode === "lending" ? 3.2 : 2.1} />
+            </div>
           </div>
 
           {/* Chart */}

@@ -8,6 +8,7 @@ interface AssetBadgeProps {
   asset: string;
   size?: "sm" | "md" | "lg";
   showName?: boolean;
+  iconOnly?: boolean;
   className?: string;
 }
 
@@ -84,6 +85,7 @@ export function AssetBadge({
   asset,
   size = "md",
   showName = false,
+  iconOnly = false,
   className,
 }: AssetBadgeProps) {
   const color = ASSET_COLORS[asset] || "var(--foreground-muted)";
@@ -116,9 +118,11 @@ export function AssetBadge({
           style={{ backgroundColor: color }}
         />
       )}
-      <span className={cn("font-medium text-[var(--foreground)]", styles.text)}>
-        {asset}
-      </span>
+      {!iconOnly && (
+        <span className={cn("font-medium text-[var(--foreground)]", styles.text)}>
+          {asset}
+        </span>
+      )}
       {showName && name && (
         <span
           className={cn(

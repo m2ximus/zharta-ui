@@ -6,7 +6,7 @@ import { AssetBadge } from "@/components/shared/asset-badge";
 import { DataTable } from "@/components/shared/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatAddress, formatDate, formatDaysRemaining, formatCurrency } from "@/lib/utils";
+import { formatAddress, formatDateShort, formatDaysRemaining, formatCurrency } from "@/lib/utils";
 import { loanRequests } from "@/data/loans";
 import type { LoanRequest } from "@/types";
 import type { FilterState } from "@/components/lend/filter-modal";
@@ -123,7 +123,7 @@ const columns: ColumnDef<LoanRequest, unknown>[] = [
   },
   {
     accessorKey: "maxLtv",
-    header: "Max LTV",
+    header: () => <span className="whitespace-nowrap">Max LTV</span>,
     cell: ({ row }) => (
       <span className="font-[family-name:var(--font-mono)] text-sm">
         {row.original.maxLtv}%
@@ -134,7 +134,7 @@ const columns: ColumnDef<LoanRequest, unknown>[] = [
     accessorKey: "maturityDate",
     header: "Maturity",
     cell: ({ row }) => (
-      <span className="text-sm">{formatDate(row.original.maturityDate)}</span>
+      <span className="text-sm">{formatDateShort(row.original.maturityDate)}</span>
     ),
   },
   {
@@ -177,7 +177,7 @@ const columns: ColumnDef<LoanRequest, unknown>[] = [
   },
   {
     accessorKey: "totalOffers",
-    header: "Total Offers",
+    header: "Offers",
     cell: ({ row }) => (
       <span className="font-[family-name:var(--font-mono)] text-sm">
         {row.original.totalOffers}
