@@ -57,7 +57,7 @@ export function AppNav() {
             href="/"
             className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
           >
-            <ZhartaLogo size="sm" showText={false} />
+            <ZhartaLogo size="md" showText={false} />
           </Link>
 
           {/* Right: notifications + wallet + settings */}
