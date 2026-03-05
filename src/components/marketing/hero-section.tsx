@@ -34,12 +34,14 @@ export function HeroSection() {
             src="https://cdn.prod.website-files.com/6734e8b50be7a2967fc4a262/67542a04e848d98aa319013a_hero-background-logo.json"
             autoplay
             loop
+            mode="bounce"
+            speed={0.5}
             style={{ width: "100%", height: "100%" }}
           />
         </div>
       </div>
 
-      {/* Lottie background — crisp layer (white/teal, looping) */}
+      {/* Lottie background — crisp layer (white/teal, bounce) */}
       <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none">
         <div
           className="w-[600px] h-[600px] md:w-[800px] md:h-[800px] lg:w-[1000px] lg:h-[1000px]"
@@ -52,6 +54,8 @@ export function HeroSection() {
             src="https://cdn.prod.website-files.com/6734e8b50be7a2967fc4a262/67542a04e848d98aa319013a_hero-background-logo.json"
             autoplay
             loop
+            mode="bounce"
+            speed={0.5}
             style={{ width: "100%", height: "100%" }}
           />
         </div>
