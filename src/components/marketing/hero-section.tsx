@@ -82,7 +82,7 @@ export function HeroSection() {
           }}
           className="mt-5 text-base md:text-lg text-[var(--color-dark-text-muted)] max-w-xl font-[family-name:var(--font-body)]"
         >
-          Fixed-rate lending infrastructure for tokenized assets
+          Institutional-grade onchain credit orderbook infrastructure for tokenized assets.
         </motion.p>
 
         <motion.div

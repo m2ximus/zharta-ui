@@ -1,3 +1,9 @@
 <svg width="32" height="32" viewBox="52 51 132 134" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M112.201 180.417V55L56 111.201V124.216L76.2156 144.431V116.451L91.9857 100.671V160.191L112.201 180.417ZM123.969 55V180.417L180.18 124.216V111.201L159.964 90.9857V118.966L144.184 134.746V75.2256L123.969 55Z" fill="#00D4AA"/>
+<style>
+  path { fill: #141414; }
+  @media (prefers-color-scheme: dark) {
+    path { fill: #ffffff; }
+  }
+</style>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M112.201 180.417V55L56 111.201V124.216L76.2156 144.431V116.451L91.9857 100.671V160.191L112.201 180.417ZM123.969 55V180.417L180.18 124.216V111.201L159.964 90.9857V118.966L144.184 134.746V75.2256L123.969 55Z"/>
 </svg>
