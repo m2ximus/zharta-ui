@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Instrument Serif", serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-primary: #00D4AA;
+  --color-primary-hover: #00E8BB;
+  --color-primary-muted: rgba(0, 212, 170, 0.15);
+  --color-secondary: #7c3aed;
+
+  --color-dark-bg: #141414;
+  --color-dark-bg-secondary: #1C1C1C;
+  --color-dark-bg-tertiary: #242424;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+  --color-dark-border-hover: rgba(255, 255, 255, 0.15);
+  --color-dark-text: #F6F5F2;
+  --color-dark-text-muted: rgba(255, 255, 255, 0.5);
+
+  --color-light-bg: #F6F5F2;
+  --color-light-bg-secondary: #FFFFFF;
+  --color-light-bg-tertiary: #EDEAE5;
+  --color-light-border: rgba(0, 0, 0, 0.06);
+  --color-light-border-hover: rgba(0, 0, 0, 0.12);
+  --color-light-text: #141414;
+  --color-light-text-muted: rgba(0, 0, 0, 0.5);
+
+  --radius-card: 3px;
+  --radius-pill: 100px;
+}
+
+:root {
+  --background: var(--color-dark-bg);
+  --background-secondary: var(--color-dark-bg-secondary);
+  --background-tertiary: var(--color-dark-bg-tertiary);
+  --foreground: var(--color-dark-text);
+  --foreground-muted: var(--color-dark-text-muted);
+  --border: var(--color-dark-border);
+  --border-hover: var(--color-dark-border-hover);
+  --card: var(--color-dark-bg-secondary);
+  --card-foreground: var(--color-dark-text);
+  --popover: var(--color-dark-bg-secondary);
+  --popover-foreground: var(--color-dark-text);
+  --muted: var(--color-dark-bg-tertiary);
+  --muted-foreground: var(--color-dark-text-muted);
+  --accent: var(--color-primary);
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --ring: var(--color-primary);
+  --input: var(--color-dark-border);
+}
+
+[data-theme="light"] {
+  --background: var(--color-light-bg);
+  --background-secondary: var(--color-light-bg-secondary);
+  --background-tertiary: var(--color-light-bg-tertiary);
+  --foreground: var(--color-light-text);
+  --foreground-muted: var(--color-light-text-muted);
+  --border: var(--color-light-border);
+  --border-hover: var(--color-light-border-hover);
+  --card: var(--color-light-bg-secondary);
+  --card-foreground: var(--color-light-text);
+  --popover: var(--color-light-bg-secondary);
+  --popover-foreground: var(--color-light-text);
+  --muted: var(--color-light-bg-tertiary);
+  --muted-foreground: var(--color-light-text-muted);
+  --input: var(--color-light-border);
+}
+
+* {
+  border-color: var(--border);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--foreground-muted);
+  border-radius: var(--radius-pill);
+}
+
+/* Animated gradient glow */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.glow-effect {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Stat counter animation */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count-up {
+  animation: count-up 0.6s ease-out forwards;
+}
