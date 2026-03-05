@@ -15,31 +15,20 @@ const ARC_RADIUS = 80;
 const CENTER_X = 100;
 const CENTER_Y = 100;
 
-// Tick marks at these values
 const TICKS = [1, 1.5, 2, 2.5, 3, 3.5, 4];
 
-// Color zones: [startValue, endValue, color]
 const ZONES: [number, number, string][] = [
-  [1, 1.5, "#ef4444"],   // red - danger
-  [1.5, 2, "#f59e0b"],   // orange/yellow - warning
-  [2, 4, "#00D4AA"],     // teal/green - healthy
+  [1, 1.5, "#ef4444"],
+  [1.5, 2, "#f59e0b"],
+  [2, 4, "#00D4AA"],
 ];
 
-/**
- * Maps a health factor value to an angle in degrees.
- * Value 1 = 180 degrees (far left), Value 4 = 0 degrees (far right).
- */
 function valueToAngle(value: number): number {
   const clamped = Math.max(GAUGE_MIN, Math.min(GAUGE_MAX, value));
   const ratio = (clamped - GAUGE_MIN) / (GAUGE_MAX - GAUGE_MIN);
-  // 180 degrees at value=1, 0 degrees at value=4
   return 180 - ratio * 180;
 }
 
-/**
- * Converts polar coordinates (angle in degrees, radius) to cartesian (x, y)
- * centered at (cx, cy). 0 degrees = right (3 o'clock).
- */
 function polarToCartesian(
   cx: number,
   cy: number,
@@ -53,10 +42,6 @@ function polarToCartesian(
   };
 }
 
-/**
- * Creates an SVG arc path from startAngle to endAngle (in degrees).
- * Angles go counter-clockwise: 180 = left, 0 = right.
- */
 function describeArc(
   cx: number,
   cy: number,
@@ -64,15 +49,10 @@ function describeArc(
   startAngleDeg: number,
   endAngleDeg: number
 ): string {
-  // SVG arcs go clockwise, but our angles go counter-clockwise
-  // So we swap: SVG draws from the "end" angle to the "start" angle
   const start = polarToCartesian(cx, cy, radius, startAngleDeg);
   const end = polarToCartesian(cx, cy, radius, endAngleDeg);
-  // The arc sweep: since startAngle > endAngle (e.g., 180 -> 120),
-  // the angular span in SVG terms
   const angularSpan = startAngleDeg - endAngleDeg;
   const largeArcFlag = angularSpan > 180 ? 1 : 0;
-
   return `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${end.x} ${end.y}`;
 }
 
@@ -90,22 +70,30 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
   return (
     <div
       className={cn(
-        "bg-[var(--color-dark-bg)] border border-[rgba(255,255,255,0.08)] rounded-[var(--radius-card)] p-6",
+        "bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-card)] p-6 flex flex-col items-center justify-center h-full",
         className
       )}
     >
       {/* Title */}
-      <h3 className="text-base font-semibold text-white mb-2">Health factor</h3>
+      <h3 className="text-xs text-[var(--foreground-muted)] mb-1">Health Factor</h3>
+
+      {/* Value */}
+      <span
+        className="text-2xl md:text-3xl font-[family-name:var(--font-mono)] font-bold"
+        style={{ color: getValueColor(clampedValue) }}
+      >
+        {clampedValue.toFixed(2)}
+      </span>
 
       {/* Gauge SVG */}
-      <div className="flex justify-center">
-        <svg viewBox="0 20 200 100" className="w-full max-w-[280px]">
+      <div className="flex justify-center w-full mt-1">
+        <svg viewBox="0 20 200 90" className="w-full max-w-[200px]">
           {/* Background track */}
           <path
             d={describeArc(CENTER_X, CENTER_Y, ARC_RADIUS, 180, 0)}
             fill="none"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth={14}
+            stroke="var(--border)"
+            strokeWidth={12}
             strokeLinecap="round"
           />
 
@@ -119,46 +107,33 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
                 d={describeArc(CENTER_X, CENTER_Y, ARC_RADIUS, startAngle, endAngle)}
                 fill="none"
                 stroke={color}
-                strokeWidth={14}
+                strokeWidth={12}
                 strokeLinecap={
                   i === 0 ? "round" : i === ZONES.length - 1 ? "round" : "butt"
                 }
-                strokeOpacity={0.85}
+                strokeOpacity={0.8}
               />
             );
           })}
 
-          {/* Tick marks and labels */}
-          {TICKS.map((tick) => {
+          {/* Tick labels only */}
+          {TICKS.filter((t) => t % 1 === 0).map((tick) => {
             const angle = valueToAngle(tick);
-            const outerPoint = polarToCartesian(CENTER_X, CENTER_Y, ARC_RADIUS + 12, angle);
-            const innerPoint = polarToCartesian(CENTER_X, CENTER_Y, ARC_RADIUS + 7, angle);
-            const labelPoint = polarToCartesian(CENTER_X, CENTER_Y, ARC_RADIUS + 21, angle);
+            const labelPoint = polarToCartesian(CENTER_X, CENTER_Y, ARC_RADIUS + 16, angle);
             return (
-              <g key={tick}>
-                {/* Tick line */}
-                <line
-                  x1={innerPoint.x}
-                  y1={innerPoint.y}
-                  x2={outerPoint.x}
-                  y2={outerPoint.y}
-                  stroke="rgba(255,255,255,0.3)"
-                  strokeWidth={1.5}
-                  strokeLinecap="round"
-                />
-                {/* Tick label */}
-                <text
-                  x={labelPoint.x}
-                  y={labelPoint.y}
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fill="rgba(255,255,255,0.45)"
-                  fontSize={8}
-                  fontFamily="monospace"
-                >
-                  {tick % 1 === 0 ? tick : tick.toFixed(1)}
-                </text>
-              </g>
+              <text
+                key={tick}
+                x={labelPoint.x}
+                y={labelPoint.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="var(--foreground-muted)"
+                fontSize={9}
+                fontFamily="monospace"
+                opacity={0.6}
+              >
+                {tick}
+              </text>
             );
           })}
 
@@ -168,8 +143,8 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
             y1={CENTER_Y}
             x2={needleTip.x}
             y2={needleTip.y}
-            stroke="white"
-            strokeWidth={2.5}
+            stroke="var(--foreground)"
+            strokeWidth={2}
             strokeLinecap="round"
             initial={false}
             animate={{
@@ -187,22 +162,12 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
           <circle
             cx={CENTER_X}
             cy={CENTER_Y}
-            r={5}
-            fill="#1a1a1a"
-            stroke="white"
-            strokeWidth={2}
+            r={4}
+            fill="var(--card)"
+            stroke="var(--foreground)"
+            strokeWidth={1.5}
           />
         </svg>
-      </div>
-
-      {/* Current value display */}
-      <div className="flex justify-center -mt-2">
-        <span
-          className="text-3xl font-mono font-bold"
-          style={{ color: getValueColor(clampedValue) }}
-        >
-          {clampedValue.toFixed(2)}
-        </span>
       </div>
     </div>
   );
