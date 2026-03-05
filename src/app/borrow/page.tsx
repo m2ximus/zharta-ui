@@ -47,11 +47,21 @@ export default function BorrowPage() {
       ? (numericPrincipal / collateralValueUsd) * 100
       : 0;
 
+  const handleLtvChange = React.useCallback(
+    (newLtv: number) => {
+      if (collateralValueUsd > 0) {
+        const newPrincipal = (newLtv / 100) * collateralValueUsd;
+        setPrincipalAmount(newPrincipal > 0 ? newPrincipal.toFixed(2) : "");
+      }
+    },
+    [collateralValueUsd]
+  );
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <AppNav />
 
-      <main className="mx-auto max-w-[1200px] px-6 lg:px-8 py-6">
+      <main className="mx-auto max-w-[1440px] px-6 lg:px-8 py-6">
         <PageTransition>
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
@@ -68,11 +78,11 @@ export default function BorrowPage() {
             {/* Left column — main form */}
             <div className="lg:col-span-8 space-y-4">
               {/* Deposit + Borrow side-by-side */}
-              <Card className="p-6">
+              <Card className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
                   {/* Deposit */}
-                  <div className="pr-0 md:pr-5 md:border-r border-[var(--border)]">
-                    <div className="flex items-center justify-between mb-4">
+                  <div className="pr-0 md:pr-6 md:border-r border-[var(--border)]">
+                    <div className="flex items-center justify-between mb-6">
                       <span className="text-sm font-medium text-[var(--foreground)]">
                         Deposit
                       </span>
@@ -97,8 +107,8 @@ export default function BorrowPage() {
                   </div>
 
                   {/* Borrow */}
-                  <div className="pl-0 md:pl-5 pt-4 md:pt-0">
-                    <div className="mb-4">
+                  <div className="pl-0 md:pl-6 pt-6 md:pt-0">
+                    <div className="mb-6">
                       <span className="text-sm font-medium text-[var(--foreground)]">
                         Borrow
                       </span>
@@ -114,15 +124,15 @@ export default function BorrowPage() {
                 </div>
               </Card>
 
-              {/* LTV — interactive */}
-              <Card className="p-6">
-                <div className="flex items-center justify-between mb-1">
+              {/* LTV — interactive color meter */}
+              <Card className="p-8">
+                <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="text-sm font-medium text-[var(--foreground)]">
                       Loan to Value (LTV)
                     </h3>
                     <p className="text-xs text-[var(--foreground-muted)] mt-0.5">
-                      Drag to adjust or enter a value
+                      Drag the indicator or enter a value
                     </p>
                   </div>
                   <div className="text-right flex items-baseline gap-1">
@@ -134,48 +144,26 @@ export default function BorrowPage() {
                         const val = e.target.value;
                         if (val === "" || /^\d*\.?\d*$/.test(val)) {
                           const newLtv = Math.min(parseFloat(val) || 0, 80);
-                          if (collateralValueUsd > 0) {
-                            const newPrincipal = (newLtv / 100) * collateralValueUsd;
-                            setPrincipalAmount(newPrincipal > 0 ? newPrincipal.toFixed(2) : "");
-                          }
+                          handleLtvChange(newLtv);
                         }
                       }}
                       className="w-20 bg-transparent text-right font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)] outline-none border-b border-[var(--border)] focus:border-[var(--color-primary)] transition-colors"
                     />
-                    <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">%</span>
+                    <span className="font-[family-name:var(--font-mono)] text-lg font-semibold text-[var(--foreground)]">
+                      %
+                    </span>
                     <p className="text-[11px] text-[var(--foreground-muted)] font-[family-name:var(--font-mono)] ml-2">
                       max. 80.00%
                     </p>
                   </div>
                 </div>
-                {/* Slider */}
-                <div className="mt-4 mb-2">
-                  <input
-                    type="range"
-                    min="0"
-                    max="80"
-                    step="0.5"
-                    value={Math.min(ltv, 80)}
-                    onChange={(e) => {
-                      const newLtv = parseFloat(e.target.value);
-                      if (collateralValueUsd > 0) {
-                        const newPrincipal = (newLtv / 100) * collateralValueUsd;
-                        setPrincipalAmount(newPrincipal > 0 ? newPrincipal.toFixed(2) : "");
-                      }
-                    }}
-                    className="w-full h-2 rounded-full appearance-none cursor-pointer accent-[var(--color-primary)]"
-                    style={{
-                      background: `linear-gradient(to right, #00D4AA ${(Math.min(ltv, 80) / 80) * 100}%, var(--muted) ${(Math.min(ltv, 80) / 80) * 100}%)`,
-                    }}
-                  />
-                </div>
-                <div className="mt-2">
-                  <LtvMeter
-                    currentLtv={ltv}
-                    maxLtv={80}
-                    liquidationLtv={82.5}
-                  />
-                </div>
+                <LtvMeter
+                  currentLtv={ltv}
+                  maxLtv={80}
+                  liquidationLtv={82.5}
+                  interactive
+                  onLtvChange={handleLtvChange}
+                />
               </Card>
 
               {/* Loan terms */}

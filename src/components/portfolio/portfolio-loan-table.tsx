@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "@/components/shared/data-table";
+import { AssetBadge } from "@/components/shared/asset-badge";
 import { formatCompactCurrency, formatPercent, cn } from "@/lib/utils";
 import { portfolioLoans } from "@/data/portfolio";
 import type { PortfolioLoan } from "@/types";
@@ -34,9 +35,12 @@ const columns: ColumnDef<PortfolioLoan, unknown>[] = [
     accessorKey: "collateralAsset",
     header: "Collateral",
     cell: ({ row }) => (
-      <span className="font-medium text-[var(--foreground)]">
-        {row.original.collateralAsset}
-      </span>
+      <div className="flex items-center gap-2.5">
+        <AssetBadge asset={row.original.collateralAsset} size="sm" />
+        <span className="font-medium text-[var(--foreground)]">
+          {row.original.collateralAsset}
+        </span>
+      </div>
     ),
   },
   {
