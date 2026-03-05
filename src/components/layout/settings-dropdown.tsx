@@ -13,9 +13,10 @@ import {
   FileText,
   Shield,
   ExternalLink,
-  PiggyBank,
+  Landmark,
   ArrowDownToLine,
   ArrowLeftRight,
+  Globe,
 } from "lucide-react";
 
 export function SettingsDropdown() {
@@ -139,13 +140,26 @@ export function SettingsDropdown() {
             {/* Divider */}
             <div className="border-t border-[var(--border)] my-1" />
 
+            {/* Network selector — mobile only */}
+            <button
+              onClick={() => {
+                setOpen(false);
+                // Dispatch a custom event to open network selector
+                window.dispatchEvent(new CustomEvent("open-network-selector"));
+              }}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors cursor-pointer sm:hidden"
+            >
+              <Globe className="w-4 h-4 flex-shrink-0" />
+              Select Network
+            </button>
+
             {/* Savings */}
             <Link
               href="/savings"
               onClick={() => setOpen(false)}
               className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[var(--foreground)] hover:bg-[var(--muted)] transition-colors"
             >
-              <PiggyBank className="w-4 h-4 flex-shrink-0" />
+              <Landmark className="w-4 h-4 flex-shrink-0" />
               Savings
             </Link>
 

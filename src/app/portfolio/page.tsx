@@ -33,12 +33,14 @@ export default function PortfolioPage() {
             <PortfolioToggle active={mode} onToggle={setMode} />
           </div>
 
-          {/* Stat cards + Health factor */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
-            <div className="lg:col-span-8">
-              <StatCardsGrid mode={mode} />
-            </div>
-            <div className="lg:col-span-4">
+          {/* Stat cards */}
+          <div className="mb-6">
+            <StatCardsGrid mode={mode} />
+          </div>
+
+          {/* Health factor */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div className="lg:col-span-1">
               <HealthFactorGauge value={mode === "lending" ? 3.2 : 2.1} />
             </div>
           </div>

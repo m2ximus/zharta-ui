@@ -89,6 +89,15 @@ export function NetworkSelector() {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState("ethereum");
 
+  // Listen for custom event from mobile menu
+  React.useEffect(() => {
+    function handleOpen() {
+      setOpen(true);
+    }
+    window.addEventListener("open-network-selector", handleOpen);
+    return () => window.removeEventListener("open-network-selector", handleOpen);
+  }, []);
+
   const current = networks.find((n) => n.id === selected) ?? networks[0];
 
   return (
