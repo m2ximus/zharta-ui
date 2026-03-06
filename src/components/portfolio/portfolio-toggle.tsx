@@ -9,24 +9,29 @@ interface PortfolioToggleProps {
 
 export function PortfolioToggle({ active, onToggle }: PortfolioToggleProps) {
   return (
-    <div className="flex items-center gap-6">
-      {(["lending", "borrowing"] as const).map((mode) => (
-        <button
-          key={mode}
-          onClick={() => onToggle(mode)}
-          className={cn(
-            "relative pb-1 text-sm font-medium transition-colors",
-            active === mode
-              ? "text-[var(--foreground)]"
-              : "text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
-          )}
-        >
-          {mode === "lending" ? "Lending" : "Borrowing"}
-          {active === mode && (
-            <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[var(--color-primary)]" />
-          )}
-        </button>
-      ))}
+    <div className="flex items-baseline gap-2 sm:gap-3">
+      <button
+        onClick={() => onToggle("borrowing")}
+        className={cn(
+          "font-[family-name:var(--font-display)] transition-all duration-300 ease-in-out leading-tight",
+          active === "borrowing"
+            ? "text-2xl sm:text-4xl md:text-5xl text-[var(--foreground)]"
+            : "text-xs sm:text-sm md:text-base text-[var(--foreground-muted)] hover:text-[var(--foreground)] cursor-pointer"
+        )}
+      >
+        Borrowing
+      </button>
+      <button
+        onClick={() => onToggle("lending")}
+        className={cn(
+          "font-[family-name:var(--font-display)] transition-all duration-300 ease-in-out leading-tight",
+          active === "lending"
+            ? "text-2xl sm:text-4xl md:text-5xl text-[var(--foreground)]"
+            : "text-xs sm:text-sm md:text-base text-[var(--foreground-muted)] hover:text-[var(--foreground)] cursor-pointer"
+        )}
+      >
+        Lending
+      </button>
     </div>
   );
 }
