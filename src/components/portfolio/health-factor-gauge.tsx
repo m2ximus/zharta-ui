@@ -74,20 +74,9 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
         className
       )}
     >
-      {/* Title */}
-      <h3 className="text-xs text-[var(--foreground-muted)] mb-1">Health Factor</h3>
-
-      {/* Value */}
-      <span
-        className="text-2xl md:text-3xl font-[family-name:var(--font-mono)] font-bold"
-        style={{ color: getValueColor(clampedValue) }}
-      >
-        {clampedValue.toFixed(2)}
-      </span>
-
       {/* Gauge SVG */}
-      <div className="flex justify-center w-full mt-1">
-        <svg viewBox="0 20 200 90" className="w-full max-w-[200px]">
+      <div className="flex justify-center w-full">
+        <svg viewBox="0 10 200 105" className="w-full max-w-[240px]">
           {/* Background track */}
           <path
             d={describeArc(CENTER_X, CENTER_Y, ARC_RADIUS, 180, 0)}
@@ -167,6 +156,32 @@ export function HealthFactorGauge({ value, className }: HealthFactorGaugeProps) 
             stroke="var(--foreground)"
             strokeWidth={1.5}
           />
+
+          {/* Label inside arc */}
+          <text
+            x={CENTER_X}
+            y={CENTER_Y - 32}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill="var(--foreground-muted)"
+            fontSize={9}
+          >
+            Health Factor
+          </text>
+
+          {/* Value inside arc */}
+          <text
+            x={CENTER_X}
+            y={CENTER_Y - 16}
+            textAnchor="middle"
+            dominantBaseline="middle"
+            fill={getValueColor(clampedValue)}
+            fontSize={22}
+            fontWeight="bold"
+            fontFamily="var(--font-mono), monospace"
+          >
+            {clampedValue.toFixed(2)}
+          </text>
         </svg>
       </div>
     </div>

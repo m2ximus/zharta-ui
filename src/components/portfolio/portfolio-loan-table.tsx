@@ -35,12 +35,7 @@ const columns: ColumnDef<PortfolioLoan, unknown>[] = [
     accessorKey: "collateralAsset",
     header: "Collateral",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2.5">
-        <AssetBadge asset={row.original.collateralAsset} size="sm" />
-        <span className="font-medium text-[var(--foreground)]">
-          {row.original.collateralAsset}
-        </span>
-      </div>
+      <AssetBadge asset={row.original.collateralAsset} size="md" iconOnly />
     ),
   },
   {
